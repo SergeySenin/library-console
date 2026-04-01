@@ -14,7 +14,7 @@ public class ConsoleInputReader {
         return consoleScanner.nextLine().trim();
     }
 
-    // TODO [STAGE 3]:
+    // TODO [STAGE 4]:
     // Позже этот класс будет расширен методами для чтения:
     // - чисел;
     // - дат;

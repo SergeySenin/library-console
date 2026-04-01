@@ -1,5 +1,6 @@
 package ru.senin.library;
 
+import ru.senin.library.console.ConsoleApplicationRunner;
 import ru.senin.library.console.ConsoleInputReader;
 import ru.senin.library.console.ConsolePrinter;
 
@@ -8,39 +9,12 @@ public class LibraryApplication {
     public static void main(String[] args) {
         ConsoleInputReader consoleInputReader = new ConsoleInputReader();
         ConsolePrinter consolePrinter = new ConsolePrinter();
-        boolean isApplicationRunning = true;
 
-        // TODO [STAGE 1]:
-        // Это стартовый координирующий класс приложения.
-        // Позже отсюда нужно будет вынести:
-        // 1. цикл обработки команд в отдельный runner;
-        // 2. маршрутизацию команд в отдельный handler;
-        // 3. создание объектов в более явную точку конфигурации.
+        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(consoleInputReader, consolePrinter);
 
-        consolePrinter.printApplicationHeader();
+        runner.run();
 
-        while (isApplicationRunning) {
-            consolePrinter.printMainMenu();
-            String userCommand = consoleInputReader.readCommand();
-
-            switch (userCommand) {
-                case "1":
-                    consolePrinter.printTestActionResult();
-                    break;
-                case "0":
-                    consolePrinter.printApplicationFinishedMessage();
-                    isApplicationRunning = false;
-                    break;
-                default:
-                    consolePrinter.printUnknownCommandMessage(userCommand);
-                    break;
-            }
-        }
-
-        // TODO [STAGE 2]:
-        // Позже нужно определить:
-        // - где выполняется сохранение данных;
-        // - где корректно закрываются ресурсы;
-        // - где находится финальная логика завершения приложения.
+        // TODO [STAGE 3]:
+        // Позже создание объектов приложения нужно будет перенести в более явную точку конфигурации.
     }
 }
