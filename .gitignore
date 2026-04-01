@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Optional: other IDEs / editors
+bin/
+.classpath
+.project
+.settings/
+.factorypath
+.vscode/
+
+# Logs and JVM crash dumps
+*.log
+logs/
+*.hprof
+hs_err_pid*
+replay_pid*.log
+
+# Temporary files
+tmp/
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
