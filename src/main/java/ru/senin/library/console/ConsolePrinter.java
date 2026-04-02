@@ -28,6 +28,7 @@ public class ConsolePrinter {
         System.out.println("0 - Завершить работу приложения");
         System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
         System.out.println("2 - Зарегистрировать новую книгу");
+        System.out.println("3 - Найти книги по названию");
         System.out.println("--------------------------------------------------------------------------------");
         System.out.print("Введите номер команды и нажмите Enter: ");
 
@@ -39,6 +40,11 @@ public class ConsolePrinter {
         // 4. Отчёты
         // 5. Настройки
         // 0. Выход
+    }
+
+    public void printApplicationFinishedMessage() {
+        System.out.println();
+        System.out.println("Работа приложения завершена по команде пользователя.");
     }
 
     public void printBookCatalog(List<Book> books) {
@@ -123,9 +129,63 @@ public class ConsolePrinter {
         // - автоматическим показом карточки книги в более полном формате.
     }
 
-    public void printApplicationFinishedMessage() {
+    public void printBookSearchHeader() {
         System.out.println();
-        System.out.println("Работа приложения завершена по команде пользователя.");
+        System.out.println("=========================== ПОИСК КНИГИ ПО НАЗВАНИЮ ============================");
+    }
+
+    public void printBookSearchPrompt() {
+        System.out.print("Введите название книги или её часть: ");
+    }
+
+    public void printBookSearchResult(
+            String titleFragment,
+            List<Book> foundBooks
+    ) {
+        System.out.println();
+        System.out.println(
+                "Результат поиска по запросу: \""
+                        + titleFragment
+                        + "\"."
+        );
+
+        if (foundBooks.isEmpty()) {
+            System.out.println("По вашему запросу книги не найдены.");
+            return;
+        }
+
+        System.out.println(
+                "Найдено книг: "
+                        + foundBooks.size()
+        );
+        System.out.println("--------------------------------------------------------------------------------");
+
+        for (Book book : foundBooks) {
+            System.out.println(
+                    "Идентификатор: "
+                            + book.getId()
+            );
+            System.out.println(
+                    "Название:      "
+                            + book.getTitle()
+            );
+            System.out.println(
+                    "Автор:         "
+                            + book.getAuthorName()
+            );
+            System.out.println(
+                    "Год издания:   "
+                            + book.getPublicationYear()
+            );
+            System.out.println("--------------------------------------------------------------------------------");
+        }
+
+        // TODO [STAGE 9]:
+        // Позже результаты поиска можно улучшить:
+        // - подсветкой совпавшего фрагмента;
+        // - поиском не только по названию, но и по автору;
+        // - сортировкой результатов;
+        // - переходом к карточке выбранной книги.
     }
 
     public void printUnknownCommandMessage(String userCommand) {
@@ -137,10 +197,10 @@ public class ConsolePrinter {
         );
         System.out.println(
                 "Повторите ввод и используйте одну из доступных команд главного меню: "
-                        + "|0| |1| |2|"
+                        + "\n |0| |1| |2| |3|"
         );
 
-        // TODO [STAGE 9]:
+        // TODO [STAGE 12]:
         // Позже обработку ошибок ввода нужно сделать более гибкой:
         // - добавить универсальный валидатор команд;
         // - поддержать вложенные меню;

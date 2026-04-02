@@ -35,6 +35,23 @@ public class BookCatalog {
         return registeredBook;
     }
 
+    public List<Book> searchBooksByTitleFragment(String titleFragment) {
+        List<Book> foundBooks = new ArrayList<>();
+        String normalizedTitleFragment = titleFragment.toLowerCase();
+
+        for (Book book : books) {
+            String normalizedBookTitle = book
+                    .getTitle()
+                    .toLowerCase();
+
+            if (normalizedBookTitle.contains(normalizedTitleFragment)) {
+                foundBooks.add(book);
+            }
+        }
+
+        return foundBooks;
+    }
+
     private void loadDemoBooks() {
         addDemoBook(
                 "Clean Code",
@@ -84,7 +101,6 @@ public class BookCatalog {
     // TODO [STAGE 11]:
     // Позже каталог нужно будет расширить возможностями:
     // - поиска книги по id;
-    // - поиска по названию;
     // - проверки уникальности;
     // - обновления книги;
     // - удаления книги;

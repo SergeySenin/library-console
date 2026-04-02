@@ -49,6 +49,9 @@ public class ConsoleApplicationRunner {
                 case "2":
                     registerNewBook();
                     break;
+                case "3":
+                    searchBooksByTitle();
+                    break;
                 default:
                     consolePrinter.printUnknownCommandMessage(userCommand);
                     break;
@@ -85,5 +88,15 @@ public class ConsoleApplicationRunner {
                 publicationYear
         );
         consolePrinter.printBookRegisteredMessage(registeredBook);
+    }
+
+    private void searchBooksByTitle() {
+        consolePrinter.printBookSearchHeader();
+        consolePrinter.printBookSearchPrompt();
+
+        String titleFragment = consoleInputReader.readRequiredText("Поисковый запрос");
+        List<Book> foundBooks = bookCatalog.searchBooksByTitleFragment(titleFragment);
+
+        consolePrinter.printBookSearchResult(titleFragment, foundBooks);
     }
 }
