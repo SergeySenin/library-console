@@ -7,9 +7,11 @@ import java.util.List;
 public class BookCatalog {
 
     private final List<Book> books;
+    private long nextBookId;
 
     public BookCatalog() {
         this.books = new ArrayList<>();
+        this.nextBookId = 1L;
         loadDemoBooks();
     }
 
@@ -17,23 +19,74 @@ public class BookCatalog {
         return new ArrayList<>(books);
     }
 
+    public Book registerBook(
+            String title,
+            String authorName,
+            Year publicationYear
+    ) {
+        Book registeredBook = new Book(
+                nextBookId,
+                title,
+                authorName,
+                publicationYear
+        );
+        books.add(registeredBook);
+        nextBookId++;
+        return registeredBook;
+    }
+
     private void loadDemoBooks() {
-        books.add(new Book(1L, "Clean Code", "Robert C. Martin", Year.of(2008)));
-        books.add(new Book(2L, "Effective Java", "Joshua Bloch", Year.of(2018)));
-        books.add(new Book(3L, "Head First Java", "Kathy Sierra", Year.of(2005)));
-        books.add(new Book(4L, "Java Concurrency in Practice", "Brian Goetz", Year.of(2006)));
-        books.add(new Book(5L, "Refactoring", "Martin Fowler", Year.of(2018)));
+        addDemoBook(
+                "Clean Code",
+                "Robert C. Martin",
+                Year.of(2008)
+        );
+        addDemoBook(
+                "Effective Java",
+                "Joshua Bloch",
+                Year.of(2018)
+        );
+        addDemoBook(
+                "Head First Java",
+                "Kathy Sierra",
+                Year.of(2005)
+        );
+        addDemoBook(
+                "Java Concurrency in Practice",
+                "Brian Goetz",
+                Year.of(2006)
+        );
+        addDemoBook(
+                "Refactoring",
+                "Martin Fowler",
+                Year.of(2018)
+        );
 
         // TODO [STAGE 10]:
         // Демо-данные нужны только для текущего этапа разработки.
         // Позже книги должны загружаться из постоянного хранилища.
     }
 
+    private void addDemoBook(
+            String title,
+            String authorName,
+            Year publicationYear
+    ) {
+        books.add(new Book(
+                nextBookId,
+                title,
+                authorName,
+                publicationYear)
+        );
+        nextBookId++;
+    }
+
     // TODO [STAGE 11]:
     // Позже каталог нужно будет расширить возможностями:
-    // - добавления книги;
     // - поиска книги по id;
     // - поиска по названию;
     // - проверки уникальности;
+    // - обновления книги;
+    // - удаления книги;
     // - загрузки данных не из демо-метода, а из файлового хранилища.
 }

@@ -12,7 +12,11 @@ public class LibraryApplication {
         ConsolePrinter consolePrinter = new ConsolePrinter();
         BookCatalog bookCatalog = new BookCatalog();
 
-        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(consoleInputReader, consolePrinter, bookCatalog);
+        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(
+                consoleInputReader,
+                consolePrinter,
+                bookCatalog
+        );
 
         runner.run();
 

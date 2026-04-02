@@ -25,8 +25,9 @@ public class ConsolePrinter {
     public void printMainMenu() {
         System.out.println();
         System.out.println("--------------------------------- ГЛАВНОЕ МЕНЮ ---------------------------------");
-        System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
         System.out.println("0 - Завершить работу приложения");
+        System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
+        System.out.println("2 - Зарегистрировать новую книгу");
         System.out.println("--------------------------------------------------------------------------------");
         System.out.print("Введите номер команды и нажмите Enter: ");
 
@@ -50,10 +51,22 @@ public class ConsolePrinter {
         }
 
         for (Book book : books) {
-            System.out.println("Идентификатор: " + book.getId());
-            System.out.println("Название: " + book.getTitle());
-            System.out.println("Автор: " + book.getAuthorName());
-            System.out.println("Год издания: " + book.getPublicationYear());
+            System.out.println(
+                    "Идентификатор: "
+                            + book.getId()
+            );
+            System.out.println(
+                    "Название:      "
+                            + book.getTitle()
+            );
+            System.out.println(
+                    "Автор:         "
+                            + book.getAuthorName()
+            );
+            System.out.println(
+                    "Год издания:   "
+                            + book.getPublicationYear()
+            );
             System.out.println("--------------------------------------------------------------------------------");
         }
 
@@ -65,6 +78,51 @@ public class ConsolePrinter {
         // - добавить краткий и полный режимы отображения.
     }
 
+    public void printBookRegistrationHeader() {
+        System.out.println();
+        System.out.println("=========================== РЕГИСТРАЦИЯ НОВОЙ КНИГИ ============================");
+    }
+
+    public void printBookTitlePrompt() {
+        System.out.print("Введите название книги: ");
+    }
+
+    public void printAuthorNamePrompt() {
+        System.out.print("Введите имя автора:     ");
+    }
+
+    public void printPublicationYearPrompt() {
+        System.out.print("Введите год издания:    ");
+    }
+
+    public void printBookRegisteredMessage(Book registeredBook) {
+        System.out.println();
+        System.out.println("Книга успешно зарегистрирована в каталоге.");
+        System.out.println("Создана запись:");
+        System.out.println(
+                "Идентификатор книги: "
+                        + registeredBook.getId()
+        );
+        System.out.println(
+                "Название книги:      "
+                        + registeredBook.getTitle()
+        );
+        System.out.println(
+                "Автор книги:         "
+                        + registeredBook.getAuthorName()
+        );
+        System.out.println(
+                "Год издания:         "
+                        + registeredBook.getPublicationYear()
+        );
+
+        // TODO [STAGE 8]:
+        // Позже сообщение об успешной регистрации можно расширить:
+        // - указанием общего количества книг в каталоге;
+        // - предложением перейти к просмотру каталога;
+        // - автоматическим показом карточки книги в более полном формате.
+    }
+
     public void printApplicationFinishedMessage() {
         System.out.println();
         System.out.println("Работа приложения завершена по команде пользователя.");
@@ -72,10 +130,17 @@ public class ConsolePrinter {
 
     public void printUnknownCommandMessage(String userCommand) {
         System.out.println();
-        System.out.println("Введена неизвестная команда: \"" + userCommand + "\".");
-        System.out.println("Повторите ввод и используйте одну из доступных команд главного меню: 1 или 0.");
+        System.out.println(
+                "Введена неизвестная команда: \""
+                        + userCommand
+                        + "\"."
+        );
+        System.out.println(
+                "Повторите ввод и используйте одну из доступных команд главного меню: "
+                        + "|0| |1| |2|"
+        );
 
-        // TODO [STAGE 8]:
+        // TODO [STAGE 9]:
         // Позже обработку ошибок ввода нужно сделать более гибкой:
         // - добавить универсальный валидатор команд;
         // - поддержать вложенные меню;

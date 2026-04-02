@@ -1,5 +1,7 @@
 package ru.senin.library.console;
 
+import java.time.DateTimeException;
+import java.time.Year;
 import java.util.Scanner;
 
 public class ConsoleInputReader {
@@ -11,13 +13,48 @@ public class ConsoleInputReader {
     }
 
     public String readCommand() {
-        return consoleScanner.nextLine().trim();
+        return consoleScanner
+                .nextLine()
+                .trim();
+    }
+
+    public String readRequiredText(String fieldDisplayName) {
+        while (true) {
+            String enteredValue = consoleScanner
+                    .nextLine()
+                    .trim();
+
+            if (!enteredValue.isEmpty()) {
+                return enteredValue;
+            }
+
+            System.out.print(
+                    "Поле \""
+                            + fieldDisplayName
+                            + "\" не может быть пустым. Повторите ввод: "
+            );
+        }
+    }
+
+    public Year readPublicationYear() {
+        while (true) {
+            String enteredValue = consoleScanner
+                    .nextLine()
+                    .trim();
+
+            try {
+                int yearValue = Integer.parseInt(enteredValue);
+                return Year.of(yearValue);
+            } catch (NumberFormatException | DateTimeException exception) {
+                System.out.print("Некорректный год издания. Введите год в формате YYYY, например 2020: ");
+            }
+        }
     }
 
     // TODO [STAGE 4]:
     // Позже этот класс будет расширен методами для чтения:
-    // - чисел;
-    // - дат;
     // - yes/no ответов;
-    // - обязательных строковых значений.
+    // - числовых диапазонов;
+    // - дат;
+    // - подтверждений действий.
 }

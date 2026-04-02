@@ -3,6 +3,7 @@ package ru.senin.library.console;
 import ru.senin.library.book.Book;
 import ru.senin.library.book.BookCatalog;
 
+import java.time.Year;
 import java.util.List;
 
 public class ConsoleApplicationRunner {
@@ -38,13 +39,15 @@ public class ConsoleApplicationRunner {
             String userCommand = consoleInputReader.readCommand();
 
             switch (userCommand) {
-                case "1":
-                    List<Book> books = bookCatalog.getAllBooks();
-                    consolePrinter.printBookCatalog(books);
-                    break;
                 case "0":
                     consolePrinter.printApplicationFinishedMessage();
                     isApplicationRunning = false;
+                    break;
+                case "1":
+                    showBookCatalog();
+                    break;
+                case "2":
+                    registerNewBook();
                     break;
                 default:
                     consolePrinter.printUnknownCommandMessage(userCommand);
@@ -57,5 +60,30 @@ public class ConsoleApplicationRunner {
         // - где выполняется сохранение данных;
         // - где корректно закрываются ресурсы;
         // - где находится финальная логика завершения приложения.
+    }
+
+    private void showBookCatalog() {
+        List<Book> books = bookCatalog.getAllBooks();
+        consolePrinter.printBookCatalog(books);
+    }
+
+    private void registerNewBook() {
+        consolePrinter.printBookRegistrationHeader();
+
+        consolePrinter.printBookTitlePrompt();
+        String title = consoleInputReader.readRequiredText("Название книги");
+
+        consolePrinter.printAuthorNamePrompt();
+        String authorName = consoleInputReader.readRequiredText("Имя автора");
+
+        consolePrinter.printPublicationYearPrompt();
+        Year publicationYear = consoleInputReader.readPublicationYear();
+
+        Book registeredBook = bookCatalog.registerBook(
+                title,
+                authorName,
+                publicationYear
+        );
+        consolePrinter.printBookRegisteredMessage(registeredBook);
     }
 }
