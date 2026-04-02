@@ -1,5 +1,9 @@
 package ru.senin.library.console;
 
+import ru.senin.library.book.Book;
+
+import java.util.List;
+
 public class ConsolePrinter {
 
     public void printApplicationHeader() {
@@ -9,7 +13,6 @@ public class ConsolePrinter {
         System.out.println("================================================================================");
         System.out.println("Текущая версия: начальный консольный каркас приложения.");
         System.out.println("Назначение этапа: проверить запуск, цикл меню и обработку команд.");
-        System.out.println();
 
         // TODO [STAGE 5]:
         // Позже стартовый экран можно расширить:
@@ -22,7 +25,7 @@ public class ConsolePrinter {
     public void printMainMenu() {
         System.out.println();
         System.out.println("--------------------------------- ГЛАВНОЕ МЕНЮ ---------------------------------");
-        System.out.println("1 - Выполнить тестовое действие");
+        System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
         System.out.println("0 - Завершить работу приложения");
         System.out.println("--------------------------------------------------------------------------------");
         System.out.print("Введите номер команды и нажмите Enter: ");
@@ -37,23 +40,29 @@ public class ConsolePrinter {
         // 0. Выход
     }
 
-    public void printTestActionResult() {
+    public void printBookCatalog(List<Book> books) {
         System.out.println();
-        System.out.println("Тестовое действие выполнено успешно.");
-        System.out.println("Это подтверждает, что приложение корректно:");
-        System.out.println("- показывает меню;");
-        System.out.println("- читает ввод пользователя;");
-        System.out.println("- обрабатывает команду;");
-        System.out.println("- продолжает работу после выполнения команды.");
+        System.out.println("================================= СПИСОК КНИГ ==================================");
+
+        if (books.isEmpty()) {
+            System.out.println("Каталог книг пуст: в системе пока нет зарегистрированных книг.");
+            return;
+        }
+
+        for (Book book : books) {
+            System.out.println("Идентификатор: " + book.getId());
+            System.out.println("Название: " + book.getTitle());
+            System.out.println("Автор: " + book.getAuthorName());
+            System.out.println("Год издания: " + book.getPublicationYear());
+            System.out.println("--------------------------------------------------------------------------------");
+        }
 
         // TODO [STAGE 7]:
-        // Этот пункт меню временный.
-        // Позже вместо него появятся реальные сценарии:
-        // - добавление книги;
-        // - регистрация читателя;
-        // - выдача экземпляра книги;
-        // - возврат экземпляра книги;
-        // - поиск и просмотр данных.
+        // Позже вывод каталога нужно улучшить:
+        // - добавить нумерацию;
+        // - добавить пагинацию;
+        // - добавить сортировку;
+        // - добавить краткий и полный режимы отображения.
     }
 
     public void printApplicationFinishedMessage() {

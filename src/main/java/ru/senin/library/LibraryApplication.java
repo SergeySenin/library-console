@@ -1,5 +1,6 @@
 package ru.senin.library;
 
+import ru.senin.library.book.BookCatalog;
 import ru.senin.library.console.ConsoleApplicationRunner;
 import ru.senin.library.console.ConsoleInputReader;
 import ru.senin.library.console.ConsolePrinter;
@@ -9,8 +10,9 @@ public class LibraryApplication {
     public static void main(String[] args) {
         ConsoleInputReader consoleInputReader = new ConsoleInputReader();
         ConsolePrinter consolePrinter = new ConsolePrinter();
+        BookCatalog bookCatalog = new BookCatalog();
 
-        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(consoleInputReader, consolePrinter);
+        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(consoleInputReader, consolePrinter, bookCatalog);
 
         runner.run();
 

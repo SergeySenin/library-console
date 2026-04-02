@@ -1,16 +1,24 @@
 package ru.senin.library.console;
 
+import ru.senin.library.book.Book;
+import ru.senin.library.book.BookCatalog;
+
+import java.util.List;
+
 public class ConsoleApplicationRunner {
 
     private final ConsoleInputReader consoleInputReader;
     private final ConsolePrinter consolePrinter;
+    private final BookCatalog bookCatalog;
 
     public ConsoleApplicationRunner(
             ConsoleInputReader consoleInputReader,
-            ConsolePrinter consolePrinter
+            ConsolePrinter consolePrinter,
+            BookCatalog bookCatalog
     ) {
         this.consoleInputReader = consoleInputReader;
         this.consolePrinter = consolePrinter;
+        this.bookCatalog = bookCatalog;
     }
 
     public void run() {
@@ -31,7 +39,8 @@ public class ConsoleApplicationRunner {
 
             switch (userCommand) {
                 case "1":
-                    consolePrinter.printTestActionResult();
+                    List<Book> books = bookCatalog.getAllBooks();
+                    consolePrinter.printBookCatalog(books);
                     break;
                 case "0":
                     consolePrinter.printApplicationFinishedMessage();
