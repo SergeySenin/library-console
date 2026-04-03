@@ -29,7 +29,7 @@ public class ConsolePrinter {
         System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
         System.out.println("2 - Зарегистрировать новую книгу");
         System.out.println("3 - Найти книги по названию");
-        System.out.println("--------------------------------------------------------------------------------");
+        printSeparatorLine();
         System.out.print("Введите номер команды и нажмите Enter: ");
 
         // TODO [STAGE 6]:
@@ -47,7 +47,7 @@ public class ConsolePrinter {
         System.out.println("Работа приложения завершена по команде пользователя.");
     }
 
-    public void printBookCatalog(List<Book> books) {
+    public void printBookList(List<Book> books) {
         System.out.println();
         System.out.println("================================= СПИСОК КНИГ ==================================");
 
@@ -57,23 +57,8 @@ public class ConsolePrinter {
         }
 
         for (Book book : books) {
-            System.out.println(
-                    "Идентификатор: "
-                            + book.getId()
-            );
-            System.out.println(
-                    "Название:      "
-                            + book.getTitle()
-            );
-            System.out.println(
-                    "Автор:         "
-                            + book.getAuthorName()
-            );
-            System.out.println(
-                    "Год издания:   "
-                            + book.getPublicationYear()
-            );
-            System.out.println("--------------------------------------------------------------------------------");
+            printBookDetails(book);
+            printSeparatorLine();
         }
 
         // TODO [STAGE 7]:
@@ -105,22 +90,7 @@ public class ConsolePrinter {
         System.out.println();
         System.out.println("Книга успешно зарегистрирована в каталоге.");
         System.out.println("Создана запись:");
-        System.out.println(
-                "Идентификатор книги: "
-                        + registeredBook.getId()
-        );
-        System.out.println(
-                "Название книги:      "
-                        + registeredBook.getTitle()
-        );
-        System.out.println(
-                "Автор книги:         "
-                        + registeredBook.getAuthorName()
-        );
-        System.out.println(
-                "Год издания:         "
-                        + registeredBook.getPublicationYear()
-        );
+        printBookDetails(registeredBook);
 
         // TODO [STAGE 8]:
         // Позже сообщение об успешной регистрации можно расширить:
@@ -138,7 +108,7 @@ public class ConsolePrinter {
         System.out.print("Введите название книги или её часть: ");
     }
 
-    public void printBookSearchResult(
+    public void printBookSearchResults(
             String titleFragment,
             List<Book> foundBooks
     ) {
@@ -158,26 +128,11 @@ public class ConsolePrinter {
                 "Найдено книг: "
                         + foundBooks.size()
         );
-        System.out.println("--------------------------------------------------------------------------------");
+        printSeparatorLine();
 
         for (Book book : foundBooks) {
-            System.out.println(
-                    "Идентификатор: "
-                            + book.getId()
-            );
-            System.out.println(
-                    "Название:      "
-                            + book.getTitle()
-            );
-            System.out.println(
-                    "Автор:         "
-                            + book.getAuthorName()
-            );
-            System.out.println(
-                    "Год издания:   "
-                            + book.getPublicationYear()
-            );
-            System.out.println("--------------------------------------------------------------------------------");
+            printBookDetails(book);
+            printSeparatorLine();
         }
 
         // TODO [STAGE 9]:
@@ -197,7 +152,7 @@ public class ConsolePrinter {
         );
         System.out.println(
                 "Повторите ввод и используйте одну из доступных команд главного меню: "
-                        + "\n |0| |1| |2| |3|"
+                        + "\n|0| |1| |2| |3|"
         );
 
         // TODO [STAGE 12]:
@@ -206,5 +161,28 @@ public class ConsolePrinter {
         // - поддержать вложенные меню;
         // - показывать список допустимых команд для текущего раздела;
         // - логировать некорректный ввод при необходимости.
+    }
+
+    private void printBookDetails(Book book) {
+        System.out.println(
+                "Идентификатор: "
+                        + book.getId()
+        );
+        System.out.println(
+                "Название:      "
+                        + book.getTitle()
+        );
+        System.out.println(
+                "Автор:         "
+                        + book.getAuthorName()
+        );
+        System.out.println(
+                "Год издания:   "
+                        + book.getPublicationYear()
+        );
+    }
+
+    private void printSeparatorLine() {
+        System.out.println("--------------------------------------------------------------------------------");
     }
 }

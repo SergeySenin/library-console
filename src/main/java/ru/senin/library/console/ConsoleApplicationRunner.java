@@ -1,25 +1,19 @@
 package ru.senin.library.console;
 
-import ru.senin.library.book.Book;
-import ru.senin.library.book.BookCatalog;
-
-import java.time.Year;
-import java.util.List;
-
 public class ConsoleApplicationRunner {
 
     private final ConsoleInputReader consoleInputReader;
     private final ConsolePrinter consolePrinter;
-    private final BookCatalog bookCatalog;
+    private final ConsoleBookHandler consoleBookHandler;
 
     public ConsoleApplicationRunner(
             ConsoleInputReader consoleInputReader,
             ConsolePrinter consolePrinter,
-            BookCatalog bookCatalog
+            ConsoleBookHandler consoleBookHandler
     ) {
         this.consoleInputReader = consoleInputReader;
         this.consolePrinter = consolePrinter;
-        this.bookCatalog = bookCatalog;
+        this.consoleBookHandler = consoleBookHandler;
     }
 
     public void run() {
@@ -28,7 +22,7 @@ public class ConsoleApplicationRunner {
         // TODO [STAGE 1]:
         // Это стартовый runner консольного приложения.
         // Позже отсюда нужно будет вынести:
-        // 1. маршрутизацию команд в отдельный handler;
+        // 1. маршрутизацию команд в отдельный handler registry;
         // 2. регистрацию команд в отдельную структуру;
         // 3. переходы между вложенными меню.
 
@@ -44,13 +38,13 @@ public class ConsoleApplicationRunner {
                     isApplicationRunning = false;
                     break;
                 case "1":
-                    showBookCatalog();
+                    consoleBookHandler.showAllBooks();
                     break;
                 case "2":
-                    registerNewBook();
+                    consoleBookHandler.registerNewBook();
                     break;
                 case "3":
-                    searchBooksByTitle();
+                    consoleBookHandler.searchBooksByTitle();
                     break;
                 default:
                     consolePrinter.printUnknownCommandMessage(userCommand);
@@ -63,40 +57,5 @@ public class ConsoleApplicationRunner {
         // - где выполняется сохранение данных;
         // - где корректно закрываются ресурсы;
         // - где находится финальная логика завершения приложения.
-    }
-
-    private void showBookCatalog() {
-        List<Book> books = bookCatalog.getAllBooks();
-        consolePrinter.printBookCatalog(books);
-    }
-
-    private void registerNewBook() {
-        consolePrinter.printBookRegistrationHeader();
-
-        consolePrinter.printBookTitlePrompt();
-        String title = consoleInputReader.readRequiredText("Название книги");
-
-        consolePrinter.printAuthorNamePrompt();
-        String authorName = consoleInputReader.readRequiredText("Имя автора");
-
-        consolePrinter.printPublicationYearPrompt();
-        Year publicationYear = consoleInputReader.readPublicationYear();
-
-        Book registeredBook = bookCatalog.registerBook(
-                title,
-                authorName,
-                publicationYear
-        );
-        consolePrinter.printBookRegisteredMessage(registeredBook);
-    }
-
-    private void searchBooksByTitle() {
-        consolePrinter.printBookSearchHeader();
-        consolePrinter.printBookSearchPrompt();
-
-        String titleFragment = consoleInputReader.readRequiredText("Поисковый запрос");
-        List<Book> foundBooks = bookCatalog.searchBooksByTitleFragment(titleFragment);
-
-        consolePrinter.printBookSearchResult(titleFragment, foundBooks);
     }
 }

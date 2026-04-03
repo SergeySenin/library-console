@@ -1,6 +1,7 @@
 package ru.senin.library;
 
 import ru.senin.library.book.BookCatalog;
+import ru.senin.library.console.ConsoleBookHandler;
 import ru.senin.library.console.ConsoleApplicationRunner;
 import ru.senin.library.console.ConsoleInputReader;
 import ru.senin.library.console.ConsolePrinter;
@@ -12,13 +13,19 @@ public class LibraryApplication {
         ConsolePrinter consolePrinter = new ConsolePrinter();
         BookCatalog bookCatalog = new BookCatalog();
 
-        ConsoleApplicationRunner runner = new ConsoleApplicationRunner(
+        ConsoleBookHandler consoleBookHandler = new ConsoleBookHandler(
                 consoleInputReader,
                 consolePrinter,
                 bookCatalog
         );
 
-        runner.run();
+        ConsoleApplicationRunner consoleApplicationRunner = new ConsoleApplicationRunner(
+                consoleInputReader,
+                consolePrinter,
+                consoleBookHandler
+        );
+
+        consoleApplicationRunner.run();
 
         // TODO [STAGE 3]:
         // Позже создание объектов приложения нужно будет перенести в более явную точку конфигурации.

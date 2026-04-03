@@ -15,7 +15,7 @@ public class BookCatalog {
         loadDemoBooks();
     }
 
-    public List<Book> getAllBooks() {
+    public List<Book> findAllBooks() {
         return new ArrayList<>(books);
     }
 
@@ -35,7 +35,7 @@ public class BookCatalog {
         return registeredBook;
     }
 
-    public List<Book> searchBooksByTitleFragment(String titleFragment) {
+    public List<Book> findBooksByTitle(String titleFragment) {
         List<Book> foundBooks = new ArrayList<>();
         String normalizedTitleFragment = titleFragment.toLowerCase();
 
