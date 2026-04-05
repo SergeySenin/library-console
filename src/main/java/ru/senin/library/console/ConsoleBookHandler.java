@@ -9,34 +9,34 @@ import java.util.List;
 public class ConsoleBookHandler {
 
     private final BookCatalog bookCatalog;
-    private final ConsolePrinter consolePrinter;
+    private final ConsoleBookPrinter consoleBookPrinter;
     private final ConsoleInputReader consoleInputReader;
 
     public ConsoleBookHandler(
             BookCatalog bookCatalog,
-            ConsolePrinter consolePrinter,
+            ConsoleBookPrinter consoleBookPrinter,
             ConsoleInputReader consoleInputReader
     ) {
         this.bookCatalog = bookCatalog;
-        this.consolePrinter = consolePrinter;
+        this.consoleBookPrinter = consoleBookPrinter;
         this.consoleInputReader = consoleInputReader;
     }
 
     public void showAllBooks() {
         List<Book> books = bookCatalog.findAllBooks();
-        consolePrinter.printBookList(books);
+        consoleBookPrinter.printBookList(books);
     }
 
     public void registerNewBook() {
-        consolePrinter.printBookRegistrationHeader();
+        consoleBookPrinter.printBookRegistrationHeader();
 
-        consolePrinter.printBookTitlePrompt();
+        consoleBookPrinter.printBookTitlePrompt();
         String title = consoleInputReader.readRequiredText("Название книги");
 
-        consolePrinter.printAuthorNamePrompt();
+        consoleBookPrinter.printAuthorNamePrompt();
         String authorName = consoleInputReader.readRequiredText("Имя автора");
 
-        consolePrinter.printPublicationYearPrompt();
+        consoleBookPrinter.printPublicationYearPrompt();
         Year publicationYear = consoleInputReader.readPublicationYear();
 
         Book registeredBook = bookCatalog.registerBook(
@@ -45,17 +45,17 @@ public class ConsoleBookHandler {
                 publicationYear
         );
 
-        consolePrinter.printBookRegisteredMessage(registeredBook);
+        consoleBookPrinter.printBookRegisteredMessage(registeredBook);
     }
 
     public void searchBooksByTitle() {
-        consolePrinter.printBookSearchHeader();
-        consolePrinter.printBookSearchPrompt();
+        consoleBookPrinter.printBookSearchHeader();
+        consoleBookPrinter.printBookSearchPrompt();
 
         String titleFragment = consoleInputReader.readRequiredText("Поисковый запрос");
         List<Book> foundBooks = bookCatalog.findBooksByTitle(titleFragment);
 
-        consolePrinter.printBookSearchResults(titleFragment, foundBooks);
+        consoleBookPrinter.printBookSearchResults(titleFragment, foundBooks);
     }
 
     // TODO [STAGE 13]:

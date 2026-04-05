@@ -8,22 +8,28 @@ import java.util.Objects;
 public class ConsoleCommandRouter {
 
     private final Map<String, ConsoleCommand> commandRegistry;
-    private final ConsolePrinter consolePrinter;
+    private final ConsoleApplicationPrinter consoleApplicationPrinter;
 
     public ConsoleCommandRouter(
-            ConsolePrinter consolePrinter,
+            ConsoleApplicationPrinter consoleApplicationPrinter,
             ConsoleBookHandler consoleBookHandler
     ) {
-        this.consolePrinter = Objects.requireNonNull(consolePrinter, "Console printer must not be null.");
+        this.consoleApplicationPrinter = Objects.requireNonNull(
+                consoleApplicationPrinter,
+                "Console application printer must not be null."
+        );
         this.commandRegistry = createCommandRegistry(consoleBookHandler);
     }
 
     public CommandRoutingResult routeCommand(String userCommand) {
-        Objects.requireNonNull(userCommand, "User command must not be null.");
+        Objects.requireNonNull(
+                userCommand,
+                "User command must not be null."
+        );
         ConsoleCommand consoleCommand = commandRegistry.get(userCommand);
 
         if (consoleCommand == null) {
-            consolePrinter.printUnknownCommandMessage(userCommand);
+            consoleApplicationPrinter.printUnknownCommandMessage(userCommand);
             return CommandRoutingResult.CONTINUE_APPLICATION;
         }
 
@@ -31,7 +37,10 @@ public class ConsoleCommandRouter {
     }
 
     private Map<String, ConsoleCommand> createCommandRegistry(ConsoleBookHandler consoleBookHandler) {
-        Objects.requireNonNull(consoleBookHandler, "Console book handler must not be null.");
+        Objects.requireNonNull(
+                consoleBookHandler,
+                "Console book handler must not be null."
+        );
 
         LinkedHashMap<String, ConsoleCommand> mutableCommandRegistry = new LinkedHashMap<>();
 
@@ -40,16 +49,19 @@ public class ConsoleCommandRouter {
                 "0",
                 this::finishApplication
         );
+
         registerCommand(
                 mutableCommandRegistry,
                 "1",
                 () -> executeAndContinueApplication(consoleBookHandler::showAllBooks)
         );
+
         registerCommand(
                 mutableCommandRegistry,
                 "2",
                 () -> executeAndContinueApplication(consoleBookHandler::registerNewBook)
         );
+
         registerCommand(
                 mutableCommandRegistry,
                 "3",
@@ -64,8 +76,14 @@ public class ConsoleCommandRouter {
             String commandKey,
             ConsoleCommand consoleCommand
     ) {
-        Objects.requireNonNull(mutableCommandRegistry, "Command registry must not be null.");
-        Objects.requireNonNull(consoleCommand, "Console command must not be null.");
+        Objects.requireNonNull(
+                mutableCommandRegistry,
+                "Command registry must not be null."
+        );
+        Objects.requireNonNull(
+                consoleCommand,
+                "Console command must not be null."
+        );
 
         if (commandKey == null || commandKey.isBlank()) {
             throw new IllegalArgumentException("Command key must not be null or blank.");
@@ -86,7 +104,7 @@ public class ConsoleCommandRouter {
     }
 
     private CommandRoutingResult finishApplication() {
-        consolePrinter.printApplicationFinishedMessage();
+        consoleApplicationPrinter.printApplicationFinishedMessage();
         return CommandRoutingResult.STOP_APPLICATION;
     }
 

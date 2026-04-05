@@ -62,21 +62,25 @@ public class BookCatalog {
                 "Robert C. Martin",
                 Year.of(2008)
         );
+
         addDemoBook(
                 "Effective Java",
                 "Joshua Bloch",
                 Year.of(2018)
         );
+
         addDemoBook(
                 "Head First Java",
                 "Kathy Sierra",
                 Year.of(2005)
         );
+
         addDemoBook(
                 "Java Concurrency in Practice",
                 "Brian Goetz",
                 Year.of(2006)
         );
+
         addDemoBook(
                 "Refactoring",
                 "Martin Fowler",

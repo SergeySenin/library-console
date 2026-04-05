@@ -1,11 +1,12 @@
 package ru.senin.library;
 
 import ru.senin.library.book.BookCatalog;
+import ru.senin.library.console.ConsoleApplicationPrinter;
 import ru.senin.library.console.ConsoleApplicationRunner;
 import ru.senin.library.console.ConsoleBookHandler;
+import ru.senin.library.console.ConsoleBookPrinter;
 import ru.senin.library.console.ConsoleCommandRouter;
 import ru.senin.library.console.ConsoleInputReader;
-import ru.senin.library.console.ConsolePrinter;
 
 public class LibraryApplication {
 
@@ -16,22 +17,23 @@ public class LibraryApplication {
 
     private static ConsoleApplicationRunner createConsoleApplicationRunner() {
         BookCatalog bookCatalog = new BookCatalog();
-        ConsolePrinter consolePrinter = new ConsolePrinter();
+        ConsoleApplicationPrinter consoleApplicationPrinter = new ConsoleApplicationPrinter();
+        ConsoleBookPrinter consoleBookPrinter = new ConsoleBookPrinter();
         ConsoleInputReader consoleInputReader = new ConsoleInputReader();
 
         ConsoleBookHandler consoleBookHandler = new ConsoleBookHandler(
                 bookCatalog,
-                consolePrinter,
+                consoleBookPrinter,
                 consoleInputReader
         );
 
         ConsoleCommandRouter consoleCommandRouter = new ConsoleCommandRouter(
-                consolePrinter,
+                consoleApplicationPrinter,
                 consoleBookHandler
         );
 
         return new ConsoleApplicationRunner(
-                consolePrinter,
+                consoleApplicationPrinter,
                 consoleInputReader,
                 consoleCommandRouter
         );

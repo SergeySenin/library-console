@@ -2,16 +2,16 @@ package ru.senin.library.console;
 
 public class ConsoleApplicationRunner {
 
-    private final ConsolePrinter consolePrinter;
+    private final ConsoleApplicationPrinter consoleApplicationPrinter;
     private final ConsoleInputReader consoleInputReader;
     private final ConsoleCommandRouter consoleCommandRouter;
 
     public ConsoleApplicationRunner(
-            ConsolePrinter consolePrinter,
+            ConsoleApplicationPrinter consoleApplicationPrinter,
             ConsoleInputReader consoleInputReader,
             ConsoleCommandRouter consoleCommandRouter
     ) {
-        this.consolePrinter = consolePrinter;
+        this.consoleApplicationPrinter = consoleApplicationPrinter;
         this.consoleInputReader = consoleInputReader;
         this.consoleCommandRouter = consoleCommandRouter;
     }
@@ -26,10 +26,10 @@ public class ConsoleApplicationRunner {
         // 2. общий жизненный цикл приложения;
         // 3. обработку завершения и сохранения данных.
 
-        consolePrinter.printApplicationHeader();
+        consoleApplicationPrinter.printApplicationHeader();
 
         while (isApplicationRunning) {
-            consolePrinter.printMainMenu();
+            consoleApplicationPrinter.printMainMenu();
 
             String userCommand = consoleInputReader.readCommand();
             CommandRoutingResult commandRoutingResult = consoleCommandRouter.routeCommand(userCommand);
