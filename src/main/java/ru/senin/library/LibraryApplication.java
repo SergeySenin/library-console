@@ -1,12 +1,12 @@
 package ru.senin.library;
 
 import ru.senin.library.book.BookCatalog;
-import ru.senin.library.console.ConsoleApplicationPrinter;
-import ru.senin.library.console.ConsoleApplicationRunner;
-import ru.senin.library.console.ConsoleBookHandler;
-import ru.senin.library.console.ConsoleBookPrinter;
-import ru.senin.library.console.ConsoleCommandRouter;
-import ru.senin.library.console.ConsoleInputReader;
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
+import ru.senin.library.console.app.ConsoleApplicationRunner;
+import ru.senin.library.console.handler.ConsoleBookHandler;
+import ru.senin.library.console.output.ConsoleBookPrinter;
+import ru.senin.library.console.command.ConsoleCommandRouter;
+import ru.senin.library.console.input.ConsoleInputReader;
 
 public class LibraryApplication {
 

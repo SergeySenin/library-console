@@ -1,7 +1,9 @@
-package ru.senin.library.console;
+package ru.senin.library.console.handler;
 
 import ru.senin.library.book.Book;
 import ru.senin.library.book.BookCatalog;
+import ru.senin.library.console.output.ConsoleBookPrinter;
+import ru.senin.library.console.input.ConsoleInputReader;
 
 import java.time.Year;
 import java.util.List;

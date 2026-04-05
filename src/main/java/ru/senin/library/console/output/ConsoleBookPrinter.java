@@ -1,4 +1,4 @@
-package ru.senin.library.console;
+package ru.senin.library.console.output;
 
 import ru.senin.library.book.Book;
 

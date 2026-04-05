@@ -1,4 +1,7 @@
-package ru.senin.library.console;
+package ru.senin.library.console.command;
+
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
+import ru.senin.library.console.handler.ConsoleBookHandler;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -1,4 +1,4 @@
-package ru.senin.library.console;
+package ru.senin.library.console.input;
 
 import java.time.DateTimeException;
 import java.time.Year;

@@ -1,4 +1,9 @@
-package ru.senin.library.console;
+package ru.senin.library.console.app;
+
+import ru.senin.library.console.command.CommandRoutingResult;
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
+import ru.senin.library.console.command.ConsoleCommandRouter;
+import ru.senin.library.console.input.ConsoleInputReader;
 
 public class ConsoleApplicationRunner {
 
