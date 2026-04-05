@@ -2,11 +2,12 @@ package ru.senin.library.console.handler;
 
 import ru.senin.library.book.Book;
 import ru.senin.library.book.BookCatalog;
-import ru.senin.library.console.output.ConsoleBookPrinter;
 import ru.senin.library.console.input.ConsoleInputReader;
+import ru.senin.library.console.output.ConsoleBookPrinter;
 
 import java.time.Year;
 import java.util.List;
+import java.util.Objects;
 
 public class ConsoleBookHandler {
 
@@ -19,9 +20,18 @@ public class ConsoleBookHandler {
             ConsoleBookPrinter consoleBookPrinter,
             ConsoleInputReader consoleInputReader
     ) {
-        this.bookCatalog = bookCatalog;
-        this.consoleBookPrinter = consoleBookPrinter;
-        this.consoleInputReader = consoleInputReader;
+        this.bookCatalog = Objects.requireNonNull(
+                bookCatalog,
+                "Book catalog must not be null."
+        );
+        this.consoleBookPrinter = Objects.requireNonNull(
+                consoleBookPrinter,
+                "Console book printer must not be null."
+        );
+        this.consoleInputReader = Objects.requireNonNull(
+                consoleInputReader,
+                "Console input reader must not be null."
+        );
     }
 
     public void showAllBooks() {

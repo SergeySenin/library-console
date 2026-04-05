@@ -1,6 +1,7 @@
 package ru.senin.library.book;
 
 import java.time.Year;
+import java.util.Objects;
 
 public class Book {
 
@@ -15,10 +16,19 @@ public class Book {
             String authorName,
             Year publicationYear
     ) {
-        this.id = id;
-        this.title = title;
-        this.authorName = authorName;
-        this.publicationYear = publicationYear;
+        this.id = validateId(id);
+        this.title = validateRequiredText(
+                title,
+                "Book title"
+        );
+        this.authorName = validateRequiredText(
+                authorName,
+                "Author name"
+        );
+        this.publicationYear = Objects.requireNonNull(
+                publicationYear,
+                "Publication year must not be null."
+        );
     }
 
     public long getId() {
@@ -35,6 +45,34 @@ public class Book {
 
     public Year getPublicationYear() {
         return publicationYear;
+    }
+
+    private static long validateId(long id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Book id must be greater than zero.");
+        }
+
+        return id;
+    }
+
+    private static String validateRequiredText(
+            String value,
+            String fieldName
+    ) {
+        Objects.requireNonNull(
+                value,
+                fieldName
+                        + " must not be null."
+        );
+
+        if (value.isBlank()) {
+            throw new IllegalArgumentException(
+                    fieldName
+                            + " must not be blank."
+            );
+        }
+
+        return value;
     }
 
     // TODO [STAGE 9]:

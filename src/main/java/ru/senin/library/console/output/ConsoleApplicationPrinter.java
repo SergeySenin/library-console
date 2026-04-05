@@ -1,5 +1,7 @@
 package ru.senin.library.console.output;
 
+import java.util.Objects;
+
 public class ConsoleApplicationPrinter {
 
     public void printApplicationHeader() {
@@ -44,6 +46,11 @@ public class ConsoleApplicationPrinter {
     }
 
     public void printUnknownCommandMessage(String userCommand) {
+        Objects.requireNonNull(
+                userCommand,
+                "User command must not be null."
+        );
+
         System.out.println();
         System.out.println(
                 "Введена неизвестная команда: \""

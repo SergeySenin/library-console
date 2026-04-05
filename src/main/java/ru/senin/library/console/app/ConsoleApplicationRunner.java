@@ -1,9 +1,11 @@
 package ru.senin.library.console.app;
 
 import ru.senin.library.console.command.CommandRoutingResult;
-import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.command.ConsoleCommandRouter;
 import ru.senin.library.console.input.ConsoleInputReader;
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
+
+import java.util.Objects;
 
 public class ConsoleApplicationRunner {
 
@@ -16,9 +18,18 @@ public class ConsoleApplicationRunner {
             ConsoleInputReader consoleInputReader,
             ConsoleCommandRouter consoleCommandRouter
     ) {
-        this.consoleApplicationPrinter = consoleApplicationPrinter;
-        this.consoleInputReader = consoleInputReader;
-        this.consoleCommandRouter = consoleCommandRouter;
+        this.consoleApplicationPrinter = Objects.requireNonNull(
+                consoleApplicationPrinter,
+                "Console application printer must not be null."
+        );
+        this.consoleInputReader = Objects.requireNonNull(
+                consoleInputReader,
+                "Console input reader must not be null."
+        );
+        this.consoleCommandRouter = Objects.requireNonNull(
+                consoleCommandRouter,
+                "Console command router must not be null."
+        );
     }
 
     public void run() {

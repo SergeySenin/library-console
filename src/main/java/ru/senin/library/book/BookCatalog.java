@@ -3,6 +3,8 @@ package ru.senin.library.book;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class BookCatalog {
 
@@ -39,14 +41,14 @@ public class BookCatalog {
     }
 
     public List<Book> findBooksByTitle(String titleFragment) {
-        List<Book> foundBooks = new ArrayList<>();
+        String normalizedTitleFragment = validateSearchQuery(titleFragment).toLowerCase(Locale.ROOT);
 
-        String normalizedTitleFragment = titleFragment.toLowerCase();
+        List<Book> foundBooks = new ArrayList<>();
 
         for (Book book : books) {
             String normalizedBookTitle = book
                     .getTitle()
-                    .toLowerCase();
+                    .toLowerCase(Locale.ROOT);
 
             if (normalizedBookTitle.contains(normalizedTitleFragment)) {
                 foundBooks.add(book);
@@ -107,6 +109,19 @@ public class BookCatalog {
         );
 
         nextBookId++;
+    }
+
+    private String validateSearchQuery(String titleFragment) {
+        Objects.requireNonNull(
+                titleFragment,
+                "Title fragment must not be null."
+        );
+
+        if (titleFragment.isBlank()) {
+            throw new IllegalArgumentException("Title fragment must not be blank.");
+        }
+
+        return titleFragment;
     }
 
     // TODO [STAGE 11]:

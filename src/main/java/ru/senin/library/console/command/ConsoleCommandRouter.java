@@ -1,7 +1,7 @@
 package ru.senin.library.console.command;
 
-import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.handler.ConsoleBookHandler;
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -112,6 +112,10 @@ public class ConsoleCommandRouter {
     }
 
     private CommandRoutingResult executeAndContinueApplication(Runnable action) {
+        Objects.requireNonNull(
+                action,
+                "Action must not be null."
+        );
         action.run();
         return CommandRoutingResult.CONTINUE_APPLICATION;
     }

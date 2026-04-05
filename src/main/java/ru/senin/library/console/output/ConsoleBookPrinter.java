@@ -3,10 +3,16 @@ package ru.senin.library.console.output;
 import ru.senin.library.book.Book;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ConsoleBookPrinter {
 
     public void printBookList(List<Book> books) {
+        Objects.requireNonNull(
+                books,
+                "Book list must not be null."
+        );
+
         System.out.println();
         System.out.println("================================= СПИСОК КНИГ ==================================");
 
@@ -46,6 +52,11 @@ public class ConsoleBookPrinter {
     }
 
     public void printBookRegisteredMessage(Book registeredBook) {
+        Objects.requireNonNull(
+                registeredBook,
+                "Registered book must not be null."
+        );
+
         System.out.println();
         System.out.println("Книга успешно зарегистрирована.");
         System.out.println("Создана запись:");
@@ -71,6 +82,19 @@ public class ConsoleBookPrinter {
             String titleFragment,
             List<Book> foundBooks
     ) {
+        Objects.requireNonNull(
+                titleFragment,
+                "Title fragment must not be null."
+        );
+        Objects.requireNonNull(
+                foundBooks,
+                "Found books list must not be null."
+        );
+
+        if (titleFragment.isBlank()) {
+            throw new IllegalArgumentException("Title fragment must not be blank.");
+        }
+
         System.out.println();
         System.out.println(
                 "Результат поиска по запросу: \""
@@ -103,6 +127,11 @@ public class ConsoleBookPrinter {
     }
 
     private void printBookDetails(Book book) {
+        Objects.requireNonNull(
+                book,
+                "Book must not be null."
+        );
+
         System.out.println(
                 "Идентификатор: "
                         + book.getId()

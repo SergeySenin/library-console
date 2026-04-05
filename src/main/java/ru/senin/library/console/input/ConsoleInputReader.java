@@ -2,6 +2,7 @@ package ru.senin.library.console.input;
 
 import java.time.DateTimeException;
 import java.time.Year;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ConsoleInputReader {
@@ -19,6 +20,15 @@ public class ConsoleInputReader {
     }
 
     public String readRequiredText(String fieldDisplayName) {
+        Objects.requireNonNull(
+                fieldDisplayName,
+                "Field display name must not be null."
+        );
+
+        if (fieldDisplayName.isBlank()) {
+            throw new IllegalArgumentException("Field display name must not be blank.");
+        }
+
         while (true) {
             String enteredValue = consoleScanner
                     .nextLine()
