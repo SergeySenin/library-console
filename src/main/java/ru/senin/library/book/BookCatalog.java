@@ -12,6 +12,7 @@ public class BookCatalog {
     public BookCatalog() {
         this.books = new ArrayList<>();
         this.nextBookId = 1L;
+
         loadDemoBooks();
     }
 
@@ -30,13 +31,16 @@ public class BookCatalog {
                 authorName,
                 publicationYear
         );
+
         books.add(registeredBook);
         nextBookId++;
+
         return registeredBook;
     }
 
     public List<Book> findBooksByTitle(String titleFragment) {
         List<Book> foundBooks = new ArrayList<>();
+
         String normalizedTitleFragment = titleFragment.toLowerCase();
 
         for (Book book : books) {
@@ -89,12 +93,15 @@ public class BookCatalog {
             String authorName,
             Year publicationYear
     ) {
-        books.add(new Book(
-                nextBookId,
-                title,
-                authorName,
-                publicationYear)
+        books.add(
+                new Book(
+                        nextBookId,
+                        title,
+                        authorName,
+                        publicationYear
+                )
         );
+
         nextBookId++;
     }
 

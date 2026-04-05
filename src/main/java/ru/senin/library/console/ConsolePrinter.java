@@ -26,9 +26,9 @@ public class ConsolePrinter {
         System.out.println();
         System.out.println("--------------------------------- ГЛАВНОЕ МЕНЮ ---------------------------------");
         System.out.println("0 - Завершить работу приложения");
-        System.out.println("1 - Показать все книги, зарегистрированные в каталоге");
-        System.out.println("2 - Зарегистрировать новую книгу");
-        System.out.println("3 - Найти книги по названию");
+        System.out.println("1 - Показать зарегистрированные книги");
+        System.out.println("2 - Зарегистрировать книгу");
+        System.out.println("3 - Найти книгу по названию");
         printSeparatorLine();
         System.out.print("Введите номер команды и нажмите Enter: ");
 
@@ -88,7 +88,7 @@ public class ConsolePrinter {
 
     public void printBookRegisteredMessage(Book registeredBook) {
         System.out.println();
-        System.out.println("Книга успешно зарегистрирована в каталоге.");
+        System.out.println("Книга успешно зарегистрирована.");
         System.out.println("Создана запись:");
         printBookDetails(registeredBook);
 

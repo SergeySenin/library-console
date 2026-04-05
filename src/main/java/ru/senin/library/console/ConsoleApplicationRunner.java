@@ -2,18 +2,18 @@ package ru.senin.library.console;
 
 public class ConsoleApplicationRunner {
 
-    private final ConsoleInputReader consoleInputReader;
     private final ConsolePrinter consolePrinter;
-    private final ConsoleBookHandler consoleBookHandler;
+    private final ConsoleInputReader consoleInputReader;
+    private final ConsoleCommandRouter consoleCommandRouter;
 
     public ConsoleApplicationRunner(
-            ConsoleInputReader consoleInputReader,
             ConsolePrinter consolePrinter,
-            ConsoleBookHandler consoleBookHandler
+            ConsoleInputReader consoleInputReader,
+            ConsoleCommandRouter consoleCommandRouter
     ) {
-        this.consoleInputReader = consoleInputReader;
         this.consolePrinter = consolePrinter;
-        this.consoleBookHandler = consoleBookHandler;
+        this.consoleInputReader = consoleInputReader;
+        this.consoleCommandRouter = consoleCommandRouter;
     }
 
     public void run() {
@@ -21,35 +21,19 @@ public class ConsoleApplicationRunner {
 
         // TODO [STAGE 1]:
         // Это стартовый runner консольного приложения.
-        // Позже отсюда нужно будет вынести:
-        // 1. маршрутизацию команд в отдельный handler registry;
-        // 2. регистрацию команд в отдельную структуру;
-        // 3. переходы между вложенными меню.
+        // (возможно) Позже отсюда нужно будет вынести:
+        // 1. запуск приложения в отдельный coordinator;
+        // 2. общий жизненный цикл приложения;
+        // 3. обработку завершения и сохранения данных.
 
         consolePrinter.printApplicationHeader();
 
         while (isApplicationRunning) {
             consolePrinter.printMainMenu();
-            String userCommand = consoleInputReader.readCommand();
 
-            switch (userCommand) {
-                case "0":
-                    consolePrinter.printApplicationFinishedMessage();
-                    isApplicationRunning = false;
-                    break;
-                case "1":
-                    consoleBookHandler.showAllBooks();
-                    break;
-                case "2":
-                    consoleBookHandler.registerNewBook();
-                    break;
-                case "3":
-                    consoleBookHandler.searchBooksByTitle();
-                    break;
-                default:
-                    consolePrinter.printUnknownCommandMessage(userCommand);
-                    break;
-            }
+            String userCommand = consoleInputReader.readCommand();
+            CommandRoutingResult commandRoutingResult = consoleCommandRouter.routeCommand(userCommand);
+            isApplicationRunning = commandRoutingResult == CommandRoutingResult.CONTINUE_APPLICATION;
         }
 
         // TODO [STAGE 2]:

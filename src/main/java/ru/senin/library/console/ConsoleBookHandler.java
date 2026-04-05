@@ -8,18 +8,18 @@ import java.util.List;
 
 public class ConsoleBookHandler {
 
-    private final ConsoleInputReader consoleInputReader;
-    private final ConsolePrinter consolePrinter;
     private final BookCatalog bookCatalog;
+    private final ConsolePrinter consolePrinter;
+    private final ConsoleInputReader consoleInputReader;
 
     public ConsoleBookHandler(
-            ConsoleInputReader consoleInputReader,
+            BookCatalog bookCatalog,
             ConsolePrinter consolePrinter,
-            BookCatalog bookCatalog
+            ConsoleInputReader consoleInputReader
     ) {
-        this.consoleInputReader = consoleInputReader;
-        this.consolePrinter = consolePrinter;
         this.bookCatalog = bookCatalog;
+        this.consolePrinter = consolePrinter;
+        this.consoleInputReader = consoleInputReader;
     }
 
     public void showAllBooks() {
@@ -63,5 +63,5 @@ public class ConsoleBookHandler {
     // - поиском книги по id;
     // - обновлением книги;
     // - удалением книги;
-    // - выделением отдельного подменю для операций с книгами.
+    // - (возможно) выделением отдельного подменю для операций с книгами.
 }
