@@ -3,7 +3,9 @@ package ru.senin.library.console.handler;
 import ru.senin.library.book.Book;
 import ru.senin.library.book.BookCatalog;
 import ru.senin.library.console.input.ConsoleInputReader;
+import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.output.ConsoleBookPrinter;
+import ru.senin.library.console.validation.BookInputValidator;
 
 import java.time.Year;
 import java.util.List;
@@ -11,19 +13,19 @@ import java.util.Objects;
 
 public class ConsoleBookHandler {
 
-    private final BookCatalog bookCatalog;
     private final ConsoleBookPrinter consoleBookPrinter;
     private final ConsoleInputReader consoleInputReader;
+    private final BookInputValidator bookInputValidator;
+    private final ConsoleApplicationPrinter consoleApplicationPrinter;
+    private final BookCatalog bookCatalog;
 
     public ConsoleBookHandler(
-            BookCatalog bookCatalog,
             ConsoleBookPrinter consoleBookPrinter,
-            ConsoleInputReader consoleInputReader
+            ConsoleInputReader consoleInputReader,
+            BookInputValidator bookInputValidator,
+            ConsoleApplicationPrinter consoleApplicationPrinter,
+            BookCatalog bookCatalog
     ) {
-        this.bookCatalog = Objects.requireNonNull(
-                bookCatalog,
-                "Book catalog must not be null."
-        );
         this.consoleBookPrinter = Objects.requireNonNull(
                 consoleBookPrinter,
                 "Console book printer must not be null."
@@ -31,6 +33,18 @@ public class ConsoleBookHandler {
         this.consoleInputReader = Objects.requireNonNull(
                 consoleInputReader,
                 "Console input reader must not be null."
+        );
+        this.bookInputValidator = Objects.requireNonNull(
+                bookInputValidator,
+                "Book input validator must not be null."
+        );
+        this.consoleApplicationPrinter = Objects.requireNonNull(
+                consoleApplicationPrinter,
+                "Console application printer must not be null."
+        );
+        this.bookCatalog = Objects.requireNonNull(
+                bookCatalog,
+                "Book catalog must not be null."
         );
     }
 
@@ -43,13 +57,24 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookRegistrationHeader();
 
         consoleBookPrinter.printBookTitlePrompt();
-        String title = consoleInputReader.readRequiredText("Название книги");
+        String title = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateBookTitle,
+                consoleApplicationPrinter::printValidationError
+        );
 
         consoleBookPrinter.printAuthorNamePrompt();
-        String authorName = consoleInputReader.readRequiredText("Имя автора");
+        String authorName = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateAuthorName,
+                consoleApplicationPrinter::printValidationError
+        );
 
         consoleBookPrinter.printPublicationYearPrompt();
-        Year publicationYear = consoleInputReader.readPublicationYear();
+        String publicationYearText = consoleInputReader.readValidatedLine(
+                bookInputValidator::validatePublicationYearText,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        Year publicationYear = bookInputValidator.parsePublicationYear(publicationYearText);
 
         Book registeredBook = bookCatalog.registerBook(
                 title,
@@ -64,10 +89,17 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookSearchHeader();
         consoleBookPrinter.printBookSearchPrompt();
 
-        String titleFragment = consoleInputReader.readRequiredText("Поисковый запрос");
+        String titleFragment = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateSearchQuery,
+                consoleApplicationPrinter::printValidationError
+        );
+
         List<Book> foundBooks = bookCatalog.findBooksByTitle(titleFragment);
 
-        consoleBookPrinter.printBookSearchResults(titleFragment, foundBooks);
+        consoleBookPrinter.printBookSearchResults(
+                titleFragment,
+                foundBooks
+        );
     }
 
     // TODO [STAGE 13]:

@@ -29,6 +29,7 @@ public class ConsoleCommandRouter {
                 userCommand,
                 "User command must not be null."
         );
+
         ConsoleCommand consoleCommand = commandRegistry.get(userCommand);
 
         if (consoleCommand == null) {
@@ -108,6 +109,7 @@ public class ConsoleCommandRouter {
 
     private CommandRoutingResult finishApplication() {
         consoleApplicationPrinter.printApplicationFinishedMessage();
+
         return CommandRoutingResult.STOP_APPLICATION;
     }
 
@@ -116,7 +118,9 @@ public class ConsoleCommandRouter {
                 action,
                 "Action must not be null."
         );
+
         action.run();
+
         return CommandRoutingResult.CONTINUE_APPLICATION;
     }
 

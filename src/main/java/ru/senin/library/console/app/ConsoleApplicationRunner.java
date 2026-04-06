@@ -4,6 +4,7 @@ import ru.senin.library.console.command.CommandRoutingResult;
 import ru.senin.library.console.command.ConsoleCommandRouter;
 import ru.senin.library.console.input.ConsoleInputReader;
 import ru.senin.library.console.output.ConsoleApplicationPrinter;
+import ru.senin.library.console.validation.MainMenuCommandValidator;
 
 import java.util.Objects;
 
@@ -11,11 +12,13 @@ public class ConsoleApplicationRunner {
 
     private final ConsoleApplicationPrinter consoleApplicationPrinter;
     private final ConsoleInputReader consoleInputReader;
+    private final MainMenuCommandValidator mainMenuCommandValidator;
     private final ConsoleCommandRouter consoleCommandRouter;
 
     public ConsoleApplicationRunner(
             ConsoleApplicationPrinter consoleApplicationPrinter,
             ConsoleInputReader consoleInputReader,
+            MainMenuCommandValidator mainMenuCommandValidator,
             ConsoleCommandRouter consoleCommandRouter
     ) {
         this.consoleApplicationPrinter = Objects.requireNonNull(
@@ -25,6 +28,10 @@ public class ConsoleApplicationRunner {
         this.consoleInputReader = Objects.requireNonNull(
                 consoleInputReader,
                 "Console input reader must not be null."
+        );
+        this.mainMenuCommandValidator = Objects.requireNonNull(
+                mainMenuCommandValidator,
+                "Main menu command validator must not be null."
         );
         this.consoleCommandRouter = Objects.requireNonNull(
                 consoleCommandRouter,
@@ -47,7 +54,11 @@ public class ConsoleApplicationRunner {
         while (isApplicationRunning) {
             consoleApplicationPrinter.printMainMenu();
 
-            String userCommand = consoleInputReader.readCommand();
+            String userCommand = consoleInputReader.readValidatedLine(
+                    mainMenuCommandValidator::validateCommand,
+                    consoleApplicationPrinter::printValidationError
+            );
+
             CommandRoutingResult commandRoutingResult = consoleCommandRouter.routeCommand(userCommand);
             isApplicationRunning = commandRoutingResult == CommandRoutingResult.CONTINUE_APPLICATION;
         }

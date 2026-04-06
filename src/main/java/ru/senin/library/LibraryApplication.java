@@ -7,6 +7,8 @@ import ru.senin.library.console.handler.ConsoleBookHandler;
 import ru.senin.library.console.input.ConsoleInputReader;
 import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.output.ConsoleBookPrinter;
+import ru.senin.library.console.validation.BookInputValidator;
+import ru.senin.library.console.validation.MainMenuCommandValidator;
 
 public class LibraryApplication {
 
@@ -17,14 +19,20 @@ public class LibraryApplication {
 
     private static ConsoleApplicationRunner createConsoleApplicationRunner() {
         BookCatalog bookCatalog = new BookCatalog();
+
+        ConsoleInputReader consoleInputReader = new ConsoleInputReader();
         ConsoleApplicationPrinter consoleApplicationPrinter = new ConsoleApplicationPrinter();
         ConsoleBookPrinter consoleBookPrinter = new ConsoleBookPrinter();
-        ConsoleInputReader consoleInputReader = new ConsoleInputReader();
+
+        MainMenuCommandValidator mainMenuCommandValidator = new MainMenuCommandValidator();
+        BookInputValidator bookInputValidator = new BookInputValidator();
 
         ConsoleBookHandler consoleBookHandler = new ConsoleBookHandler(
-                bookCatalog,
                 consoleBookPrinter,
-                consoleInputReader
+                consoleInputReader,
+                bookInputValidator,
+                consoleApplicationPrinter,
+                bookCatalog
         );
 
         ConsoleCommandRouter consoleCommandRouter = new ConsoleCommandRouter(
@@ -35,10 +43,11 @@ public class LibraryApplication {
         return new ConsoleApplicationRunner(
                 consoleApplicationPrinter,
                 consoleInputReader,
+                mainMenuCommandValidator,
                 consoleCommandRouter
         );
     }
 
     // TODO [STAGE 3]:
-    // Позже создание объектов приложения нужно вынести из LibraryApplication в configuration / bootstrap класс.
+    // Позже создание объектов приложения нужно будет перенести в более явную отдельную точку конфигурации.
 }

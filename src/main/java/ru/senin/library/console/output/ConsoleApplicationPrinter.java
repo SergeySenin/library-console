@@ -45,6 +45,19 @@ public class ConsoleApplicationPrinter {
         System.out.println("Работа приложения завершена по команде пользователя.");
     }
 
+    public void printValidationError(String errorMessage) {
+        Objects.requireNonNull(
+                errorMessage,
+                "Error message must not be null."
+        );
+
+        System.out.println();
+        System.out.println(
+                "Ошибка ввода: "
+                        + errorMessage
+        );
+    }
+
     public void printUnknownCommandMessage(String userCommand) {
         Objects.requireNonNull(
                 userCommand,

@@ -1,8 +1,10 @@
 package ru.senin.library.console.input;
 
-import java.time.DateTimeException;
-import java.time.Year;
+import ru.senin.library.console.validation.ValidationResult;
+
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.Scanner;
 
 public class ConsoleInputReader {
@@ -13,58 +15,38 @@ public class ConsoleInputReader {
         this.consoleScanner = new Scanner(System.in);
     }
 
-    public String readCommand() {
-        return consoleScanner
-                .nextLine()
-                .trim();
-    }
-
-    public String readRequiredText(String fieldDisplayName) {
+    public String readValidatedLine(
+            Function<String, ValidationResult> validator,
+            Consumer<String> validationErrorPrinter
+    ) {
         Objects.requireNonNull(
-                fieldDisplayName,
-                "Field display name must not be null."
+                validator,
+                "Validator must not be null."
         );
-
-        if (fieldDisplayName.isBlank()) {
-            throw new IllegalArgumentException("Field display name must not be blank.");
-        }
+        Objects.requireNonNull(
+                validationErrorPrinter,
+                "Validation error printer must not be null."
+        );
 
         while (true) {
             String enteredValue = consoleScanner
                     .nextLine()
                     .trim();
 
-            if (!enteredValue.isEmpty()) {
+            ValidationResult validationResult = validator.apply(enteredValue);
+
+            if (validationResult.isValid()) {
                 return enteredValue;
             }
 
-            System.out.print(
-                    "Поле \""
-                            + fieldDisplayName
-                            + "\" не может быть пустым. Повторите ввод: "
-            );
-        }
-    }
-
-    public Year readPublicationYear() {
-        while (true) {
-            String enteredValue = consoleScanner
-                    .nextLine()
-                    .trim();
-
-            try {
-                int yearValue = Integer.parseInt(enteredValue);
-                return Year.of(yearValue);
-            } catch (NumberFormatException | DateTimeException exception) {
-                System.out.print("Некорректный год издания. Введите год в формате YYYY, например 2020: ");
-            }
+            validationErrorPrinter.accept(validationResult.getErrorMessage());
         }
     }
 
     // TODO [STAGE 4]:
-    // Позже этот класс будет расширен методами для чтения:
-    // - yes/no ответов;
-    // - числовых диапазонов;
-    // - дат;
-    // - подтверждений действий.
+    // Позже этот класс можно расширить:
+    // - чтением yes/no ответов;
+    // - чтением подтверждений действий;
+    // - чтением чисел в диапазоне;
+    // - чтением дат.
 }
