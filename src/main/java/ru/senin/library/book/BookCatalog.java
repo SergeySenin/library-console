@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public class BookCatalog {
 
@@ -38,6 +39,20 @@ public class BookCatalog {
         nextBookId++;
 
         return registeredBook;
+    }
+
+    public Optional<Book> findBookById(long bookId) {
+        if (bookId <= 0) {
+            throw new IllegalArgumentException("Book id must be greater than zero.");
+        }
+
+        for (Book book : books) {
+            if (book.getId() == bookId) {
+                return Optional.of(book);
+            }
+        }
+
+        return Optional.empty();
     }
 
     public List<Book> findBooksByTitle(String titleFragment) {
@@ -126,7 +141,6 @@ public class BookCatalog {
 
     // TODO [STAGE 11]:
     // Позже каталог нужно будет расширить возможностями:
-    // - поиска книги по id;
     // - проверки уникальности;
     // - обновления книги;
     // - удаления книги;

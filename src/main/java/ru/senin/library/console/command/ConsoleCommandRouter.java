@@ -69,6 +69,12 @@ public class ConsoleCommandRouter {
         registerCommand(
                 mutableCommandRegistry,
                 "3",
+                () -> executeAndContinueApplication(consoleBookHandler::searchBookById)
+        );
+
+        registerCommand(
+                mutableCommandRegistry,
+                "4",
                 () -> executeAndContinueApplication(consoleBookHandler::searchBooksByTitle)
         );
 

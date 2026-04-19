@@ -51,6 +51,34 @@ public class ConsoleBookPrinter {
         System.out.print("Введите год издания:    ");
     }
 
+    public void printBookIdSearchHeader() {
+        System.out.println();
+        System.out.println("========================= ПОИСК КНИГИ ПО ИДЕНТИФИКАТОРУ ==========================");
+    }
+
+    public void printBookIdPrompt() {
+        System.out.print("Введите идентификатор книги: ");
+    }
+
+    public void printBookFoundById(
+            long bookId,
+            Book foundBook
+    ) {
+        Objects.requireNonNull(
+                foundBook,
+                "Found book must not be null."
+        );
+
+        printBookIdSearchResultHeader(bookId);
+        printBookDetails(foundBook);
+        printSeparatorLine();
+    }
+
+    public void printBookNotFoundById(long bookId) {
+        printBookIdSearchResultHeader(bookId);
+        System.out.println("Книга с таким идентификатором не найдена.");
+    }
+
     public void printBookRegisteredMessage(Book registeredBook) {
         Objects.requireNonNull(
                 registeredBook,
@@ -152,5 +180,14 @@ public class ConsoleBookPrinter {
 
     private void printSeparatorLine() {
         System.out.println("--------------------------------------------------------------------------------");
+    }
+
+    private void printBookIdSearchResultHeader(long bookId) {
+        System.out.println();
+        System.out.println(
+                "Результат поиска по идентификатору: "
+                        + bookId
+                        + "."
+        );
     }
 }

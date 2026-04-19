@@ -10,6 +10,45 @@ public class BookInputValidator {
     private static final int MAX_SEARCH_QUERY_LENGTH = 32;
     private static final int MIN_PUBLICATION_YEAR = 1500;
 
+    public ValidationResult validateBookIdText(String bookIdText) {
+        if (bookIdText == null || bookIdText.isBlank()) {
+            return ValidationResult.invalid("Идентификатор книги не может быть пустым.");
+        }
+
+        String normalizedBookIdText = bookIdText.trim();
+
+        if (!normalizedBookIdText.matches("\\d+")) {
+            return ValidationResult.invalid(
+                    "Идентификатор книги должен содержать только положительное целое число."
+            );
+        }
+
+        try {
+            long bookId = Long.parseLong(normalizedBookIdText);
+
+            if (bookId <= 0) {
+                return ValidationResult.invalid(
+                        "Идентификатор книги должен быть больше нуля."
+                );
+            }
+        } catch (NumberFormatException exception) {
+            return ValidationResult.invalid(
+                    "Идентификатор книги слишком большой."
+            );
+        }
+
+        return ValidationResult.valid();
+    }
+
+    public long parseBookId(String bookIdText) {
+        Objects.requireNonNull(
+                bookIdText,
+                "Book id text must not be null."
+        );
+
+        return Long.parseLong(bookIdText.trim());
+    }
+
     public ValidationResult validateBookTitle(String title) {
         if (title == null || title.isBlank()) {
             return ValidationResult.invalid("Название книги не может быть пустым.");

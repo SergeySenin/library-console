@@ -10,6 +10,7 @@ import ru.senin.library.console.validation.BookInputValidator;
 import java.time.Year;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class ConsoleBookHandler {
 
@@ -85,6 +86,29 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookRegisteredMessage(registeredBook);
     }
 
+    public void searchBookById() {
+        consoleBookPrinter.printBookIdSearchHeader();
+        consoleBookPrinter.printBookIdPrompt();
+
+        String bookIdText = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateBookIdText,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        long bookId = bookInputValidator.parseBookId(bookIdText);
+        Optional<Book> foundBook = bookCatalog.findBookById(bookId);
+
+        if (foundBook.isPresent()) {
+            consoleBookPrinter.printBookFoundById(
+                    bookId,
+                    foundBook.get()
+            );
+            return;
+        }
+
+        consoleBookPrinter.printBookNotFoundById(bookId);
+    }
+
     public void searchBooksByTitle() {
         consoleBookPrinter.printBookSearchHeader();
         consoleBookPrinter.printBookSearchPrompt();
@@ -104,7 +128,6 @@ public class ConsoleBookHandler {
 
     // TODO [STAGE 13]:
     // Позже этот обработчик нужно будет расширить:
-    // - поиском книги по id;
     // - обновлением книги;
     // - удалением книги;
     // - (возможно) выделением отдельного подменю для операций с книгами.
