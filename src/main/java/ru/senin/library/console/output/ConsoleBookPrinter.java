@@ -51,9 +51,27 @@ public class ConsoleBookPrinter {
         System.out.print("Введите год издания:    ");
     }
 
+    public void printBookRegisteredMessage(Book registeredBook) {
+        Objects.requireNonNull(
+                registeredBook,
+                "Registered book must not be null."
+        );
+
+        System.out.println();
+        System.out.println("Книга успешно зарегистрирована.");
+        System.out.println("Создана запись:");
+        printBookDetails(registeredBook);
+
+        // TODO [STAGE 8]:
+        // Позже сообщение об успешной регистрации можно расширить:
+        // - указанием общего количества книг в каталоге;
+        // - предложением перейти к просмотру каталога;
+        // - автоматическим показом карточки книги в более полном формате.
+    }
+
     public void printBookIdSearchHeader() {
         System.out.println();
-        System.out.println("========================= ПОИСК КНИГИ ПО ИДЕНТИФИКАТОРУ ==========================");
+        System.out.println("======================== ПОИСК КНИГИ ПО ИДЕНТИФИКАТОРУ =========================");
     }
 
     public void printBookIdPrompt() {
@@ -79,24 +97,6 @@ public class ConsoleBookPrinter {
         System.out.println("Книга с таким идентификатором не найдена.");
     }
 
-    public void printBookRegisteredMessage(Book registeredBook) {
-        Objects.requireNonNull(
-                registeredBook,
-                "Registered book must not be null."
-        );
-
-        System.out.println();
-        System.out.println("Книга успешно зарегистрирована.");
-        System.out.println("Создана запись:");
-        printBookDetails(registeredBook);
-
-        // TODO [STAGE 8]:
-        // Позже сообщение об успешной регистрации можно расширить:
-        // - указанием общего количества книг в каталоге;
-        // - предложением перейти к просмотру каталога;
-        // - автоматическим показом карточки книги в более полном формате.
-    }
-
     public void printBookSearchHeader() {
         System.out.println();
         System.out.println("=========================== ПОИСК КНИГИ ПО НАЗВАНИЮ ============================");
@@ -104,6 +104,15 @@ public class ConsoleBookPrinter {
 
     public void printBookSearchPrompt() {
         System.out.print("Введите название книги или её часть: ");
+    }
+
+    public void printBookAuthorSearchHeader() {
+        System.out.println();
+        System.out.println("============================ ПОИСК КНИГИ ПО АВТОРУ =============================");
+    }
+
+    public void printBookAuthorSearchPrompt() {
+        System.out.print("Введите имя автора или его часть: ");
     }
 
     public void printBookSearchResults(

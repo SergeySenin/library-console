@@ -78,6 +78,12 @@ public class ConsoleCommandRouter {
                 () -> executeAndContinueApplication(consoleBookHandler::searchBooksByTitle)
         );
 
+        registerCommand(
+                mutableCommandRegistry,
+                "5",
+                () -> executeAndContinueApplication(consoleBookHandler::searchBooksByAuthor)
+        );
+
         return Collections.unmodifiableMap(mutableCommandRegistry);
     }
 

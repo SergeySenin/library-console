@@ -73,6 +73,24 @@ public class BookCatalog {
         return foundBooks;
     }
 
+    public List<Book> findBooksByAuthor(String authorFragment) {
+        String normalizedAuthorFragment = validateSearchQuery(authorFragment).toLowerCase(Locale.ROOT);
+
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : books) {
+            String normalizedAuthorName = book
+                    .getAuthorName()
+                    .toLowerCase(Locale.ROOT);
+
+            if (normalizedAuthorName.contains(normalizedAuthorFragment)) {
+                foundBooks.add(book);
+            }
+        }
+
+        return foundBooks;
+    }
+
     private void loadDemoBooks() {
         addDemoBook(
                 "Clean Code",

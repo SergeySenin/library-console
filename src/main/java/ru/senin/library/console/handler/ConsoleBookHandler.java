@@ -114,7 +114,7 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookSearchPrompt();
 
         String titleFragment = consoleInputReader.readValidatedLine(
-                bookInputValidator::validateSearchQuery,
+                bookInputValidator::validateTitleSearchQuery,
                 consoleApplicationPrinter::printValidationError
         );
 
@@ -122,6 +122,23 @@ public class ConsoleBookHandler {
 
         consoleBookPrinter.printBookSearchResults(
                 titleFragment,
+                foundBooks
+        );
+    }
+
+    public void searchBooksByAuthor() {
+        consoleBookPrinter.printBookAuthorSearchHeader();
+        consoleBookPrinter.printBookAuthorSearchPrompt();
+
+        String authorFragment = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateAuthorSearchQuery,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        List<Book> foundBooks = bookCatalog.findBooksByAuthor(authorFragment);
+
+        consoleBookPrinter.printBookSearchResults(
+                authorFragment,
                 foundBooks
         );
     }
