@@ -84,6 +84,12 @@ public class ConsoleCommandRouter {
                 () -> executeAndContinueApplication(consoleBookHandler::searchBooksByAuthor)
         );
 
+        registerCommand(
+                mutableCommandRegistry,
+                "6",
+                () -> executeAndContinueApplication(consoleBookHandler::searchBooksByPublicationYear)
+        );
+
         return Collections.unmodifiableMap(mutableCommandRegistry);
     }
 
@@ -136,10 +142,10 @@ public class ConsoleCommandRouter {
         return CommandRoutingResult.CONTINUE_APPLICATION;
     }
 
-    // TODO [STAGE 14]:
+    // TODO [STAGE 15]:
     // Позже маршрутизацию команд можно расширить:
     // - вынести описание команд в отдельную конфигурацию;
-    // - (возможно) добавить поддержку вложенных меню;
-    // - (возможно) ввести отдельный контекст текущего меню;
-    // - (возможно) подключить разные наборы команд для разных разделов приложения.
+    // - добавить поддержку вложенных меню;
+    // - ввести отдельный контекст текущего меню;
+    // - подключить разные наборы команд для разных разделов приложения.
 }

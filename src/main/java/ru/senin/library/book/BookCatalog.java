@@ -56,7 +56,7 @@ public class BookCatalog {
     }
 
     public List<Book> findBooksByTitle(String titleFragment) {
-        String normalizedTitleFragment = validateSearchQuery(titleFragment).toLowerCase(Locale.ROOT);
+        String normalizedSearchQuery = validateSearchQuery(titleFragment).toLowerCase(Locale.ROOT);
 
         List<Book> foundBooks = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class BookCatalog {
                     .getTitle()
                     .toLowerCase(Locale.ROOT);
 
-            if (normalizedBookTitle.contains(normalizedTitleFragment)) {
+            if (normalizedBookTitle.contains(normalizedSearchQuery)) {
                 foundBooks.add(book);
             }
         }
@@ -74,7 +74,7 @@ public class BookCatalog {
     }
 
     public List<Book> findBooksByAuthor(String authorFragment) {
-        String normalizedAuthorFragment = validateSearchQuery(authorFragment).toLowerCase(Locale.ROOT);
+        String normalizedSearchQuery = validateSearchQuery(authorFragment).toLowerCase(Locale.ROOT);
 
         List<Book> foundBooks = new ArrayList<>();
 
@@ -83,7 +83,24 @@ public class BookCatalog {
                     .getAuthorName()
                     .toLowerCase(Locale.ROOT);
 
-            if (normalizedAuthorName.contains(normalizedAuthorFragment)) {
+            if (normalizedAuthorName.contains(normalizedSearchQuery)) {
+                foundBooks.add(book);
+            }
+        }
+
+        return foundBooks;
+    }
+
+    public List<Book> findBooksByPublicationYear(Year publicationYear) {
+        Objects.requireNonNull(
+                publicationYear,
+                "Publication year must not be null."
+        );
+
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : books) {
+            if (book.getPublicationYear().equals(publicationYear)) {
                 foundBooks.add(book);
             }
         }
@@ -144,17 +161,17 @@ public class BookCatalog {
         nextBookId++;
     }
 
-    private String validateSearchQuery(String titleFragment) {
+    private String validateSearchQuery(String searchQuery) {
         Objects.requireNonNull(
-                titleFragment,
-                "Title fragment must not be null."
+                searchQuery,
+                "Search query must not be null."
         );
 
-        if (titleFragment.isBlank()) {
-            throw new IllegalArgumentException("Title fragment must not be blank.");
+        if (searchQuery.isBlank()) {
+            throw new IllegalArgumentException("Search query must not be blank.");
         }
 
-        return titleFragment;
+        return searchQuery;
     }
 
     // TODO [STAGE 11]:

@@ -115,27 +115,36 @@ public class ConsoleBookPrinter {
         System.out.print("Введите имя автора или его часть: ");
     }
 
+    public void printBookPublicationYearSearchHeader() {
+        System.out.println();
+        System.out.println("========================= ПОИСК КНИГИ ПО ГОДУ ИЗДАНИЯ ==========================");
+    }
+
+    public void printBookPublicationYearSearchPrompt() {
+        System.out.print("Введите год издания: ");
+    }
+
     public void printBookSearchResults(
-            String titleFragment,
+            String searchQuery,
             List<Book> foundBooks
     ) {
         Objects.requireNonNull(
-                titleFragment,
-                "Title fragment must not be null."
+                searchQuery,
+                "Search query must not be null."
         );
         Objects.requireNonNull(
                 foundBooks,
                 "Found books list must not be null."
         );
 
-        if (titleFragment.isBlank()) {
-            throw new IllegalArgumentException("Title fragment must not be blank.");
+        if (searchQuery.isBlank()) {
+            throw new IllegalArgumentException("Search query must not be blank.");
         }
 
         System.out.println();
         System.out.println(
                 "Результат поиска по запросу: \""
-                        + titleFragment
+                        + searchQuery
                         + "\"."
         );
 
@@ -155,11 +164,11 @@ public class ConsoleBookPrinter {
             printSeparatorLine();
         }
 
-        // TODO [STAGE 9]:
+        // TODO [STAGE 12]:
         // Позже результаты поиска можно улучшить:
         // - подсветкой совпавшего фрагмента;
-        // - поиском не только по названию, но и по автору;
         // - сортировкой результатов;
+        // - унификацией вывода для разных видов поиска;
         // - переходом к карточке выбранной книги.
     }
 

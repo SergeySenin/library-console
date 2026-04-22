@@ -113,15 +113,15 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookSearchHeader();
         consoleBookPrinter.printBookSearchPrompt();
 
-        String titleFragment = consoleInputReader.readValidatedLine(
+        String titleSearchQuery = consoleInputReader.readValidatedLine(
                 bookInputValidator::validateTitleSearchQuery,
                 consoleApplicationPrinter::printValidationError
         );
 
-        List<Book> foundBooks = bookCatalog.findBooksByTitle(titleFragment);
+        List<Book> foundBooks = bookCatalog.findBooksByTitle(titleSearchQuery);
 
         consoleBookPrinter.printBookSearchResults(
-                titleFragment,
+                titleSearchQuery,
                 foundBooks
         );
     }
@@ -130,20 +130,38 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookAuthorSearchHeader();
         consoleBookPrinter.printBookAuthorSearchPrompt();
 
-        String authorFragment = consoleInputReader.readValidatedLine(
+        String authorSearchQuery = consoleInputReader.readValidatedLine(
                 bookInputValidator::validateAuthorSearchQuery,
                 consoleApplicationPrinter::printValidationError
         );
 
-        List<Book> foundBooks = bookCatalog.findBooksByAuthor(authorFragment);
+        List<Book> foundBooks = bookCatalog.findBooksByAuthor(authorSearchQuery);
 
         consoleBookPrinter.printBookSearchResults(
-                authorFragment,
+                authorSearchQuery,
                 foundBooks
         );
     }
 
-    // TODO [STAGE 13]:
+    public void searchBooksByPublicationYear() {
+        consoleBookPrinter.printBookPublicationYearSearchHeader();
+        consoleBookPrinter.printBookPublicationYearSearchPrompt();
+
+        String publicationYearSearchQuery = consoleInputReader.readValidatedLine(
+                bookInputValidator::validatePublicationYearSearchQuery,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        Year publicationYear = bookInputValidator.parsePublicationYearSearchQuery(publicationYearSearchQuery);
+        List<Book> foundBooks = bookCatalog.findBooksByPublicationYear(publicationYear);
+
+        consoleBookPrinter.printBookSearchResults(
+                publicationYearSearchQuery,
+                foundBooks
+        );
+    }
+
+    // TODO [STAGE 14]:
     // Позже этот обработчик нужно будет расширить:
     // - обновлением книги;
     // - удалением книги;

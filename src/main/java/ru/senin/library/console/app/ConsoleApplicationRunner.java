@@ -42,12 +42,10 @@ public class ConsoleApplicationRunner {
     public void run() {
         boolean isApplicationRunning = true;
 
-        // TODO [STAGE 1]:
-        // Это стартовый runner консольного приложения.
-        // (возможно) Позже отсюда нужно будет вынести:
-        // 1. запуск приложения в отдельный coordinator;
-        // 2. общий жизненный цикл приложения;
-        // 3. обработку завершения и сохранения данных.
+        // TODO [STAGE 2]:
+        // Позже этот runner нужно будет упростить:
+        // - вынести запуск приложения в отдельный coordinator;
+        // - отделить жизненный цикл приложения от цикла консольного меню.
 
         consoleApplicationPrinter.printApplicationHeader();
 
@@ -63,7 +61,7 @@ public class ConsoleApplicationRunner {
             isApplicationRunning = commandRoutingResult == CommandRoutingResult.CONTINUE_APPLICATION;
         }
 
-        // TODO [STAGE 2]:
+        // TODO [STAGE 3]:
         // Позже нужно определить:
         // - где выполняется сохранение данных;
         // - где корректно закрываются ресурсы;

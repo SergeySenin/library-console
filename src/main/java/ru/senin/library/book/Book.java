@@ -56,23 +56,23 @@ public class Book {
     }
 
     private static String validateRequiredText(
-            String value,
+            String textValue,
             String fieldName
     ) {
         Objects.requireNonNull(
-                value,
+                textValue,
                 fieldName
                         + " must not be null."
         );
 
-        if (value.isBlank()) {
+        if (textValue.isBlank()) {
             throw new IllegalArgumentException(
                     fieldName
                             + " must not be blank."
             );
         }
 
-        return value;
+        return textValue;
     }
 
     // TODO [STAGE 9]:
