@@ -2,6 +2,7 @@ package ru.senin.library.console.output;
 
 import ru.senin.library.book.Book;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +123,83 @@ public class ConsoleBookPrinter {
 
     public void printBookPublicationYearSearchPrompt() {
         System.out.print("Введите год издания: ");
+    }
+
+    public void printBookUpdateHeader() {
+        System.out.println();
+        System.out.println("============================= РЕДАКТИРОВАНИЕ КНИГИ =============================");
+    }
+
+    public void printBookUpdateHint() {
+        System.out.println("Чтобы оставить текущее значение без изменений, нажмите Enter.");
+    }
+
+    public void printBookSelectedForUpdate(Book book) {
+        Objects.requireNonNull(
+                book,
+                "Book must not be null."
+        );
+
+        System.out.println();
+        System.out.println("Найдена книга для редактирования:");
+        printBookDetails(book);
+        printSeparatorLine();
+    }
+
+    public void printBookUpdateTitlePrompt(String currentTitle) {
+        Objects.requireNonNull(
+                currentTitle,
+                "Current title must not be null."
+        );
+
+        System.out.print(
+                "Новое название книги [текущее: "
+                        + currentTitle
+                        + "]: "
+        );
+    }
+
+    public void printBookUpdateAuthorPrompt(String currentAuthorName) {
+        Objects.requireNonNull(
+                currentAuthorName,
+                "Current author name must not be null."
+        );
+
+        System.out.print(
+                "Новое имя автора [текущее: "
+                        + currentAuthorName
+                        + "]: "
+        );
+    }
+
+    public void printBookUpdatePublicationYearPrompt(Year currentPublicationYear) {
+        Objects.requireNonNull(
+                currentPublicationYear,
+                "Current publication year must not be null."
+        );
+
+        System.out.print(
+                "Новый год издания [текущий: "
+                        + currentPublicationYear
+                        + "]: "
+        );
+    }
+
+    public void printBookUpdatedMessage(Book updatedBook) {
+        Objects.requireNonNull(
+                updatedBook,
+                "Updated book must not be null."
+        );
+
+        System.out.println();
+        System.out.println("Книга успешно обновлена.");
+        System.out.println("Обновлённая запись:");
+        printBookDetails(updatedBook);
+
+        // TODO [STAGE 16]:
+        // Позже сообщение об успешном обновлении можно расширить:
+        // - выводом перечня изменённых полей;
+        // - логикой подтверждения изменений перед сохранением.
     }
 
     public void printBookSearchResults(

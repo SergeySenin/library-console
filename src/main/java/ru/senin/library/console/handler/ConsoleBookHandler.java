@@ -161,9 +161,90 @@ public class ConsoleBookHandler {
         );
     }
 
-    // TODO [STAGE 14]:
+    public void updateBook() {
+        consoleBookPrinter.printBookUpdateHeader();
+
+        long bookId = readBookIdForUpdate();
+        Optional<Book> foundBook = bookCatalog.findBookById(bookId);
+
+        if (foundBook.isEmpty()) {
+            consoleBookPrinter.printBookNotFoundById(bookId);
+            return;
+        }
+
+        Book bookToUpdate = foundBook.get();
+        Book updatedBookCandidate = buildUpdatedBookCandidate(bookToUpdate);
+
+        Optional<Book> updatedBook = bookCatalog.updateBook(
+                bookId,
+                updatedBookCandidate.getTitle(),
+                updatedBookCandidate.getAuthorName(),
+                updatedBookCandidate.getPublicationYear()
+        );
+
+        if (updatedBook.isPresent()) {
+            consoleBookPrinter.printBookUpdatedMessage(updatedBook.get());
+            return;
+        }
+
+        consoleBookPrinter.printBookNotFoundById(bookId);
+    }
+
+    private long readBookIdForUpdate() {
+        consoleBookPrinter.printBookIdPrompt();
+
+        String bookIdText = consoleInputReader.readValidatedLine(
+                bookInputValidator::validateBookIdText,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        return bookInputValidator.parseBookId(bookIdText);
+    }
+
+    private Book buildUpdatedBookCandidate(Book bookToUpdate) {
+        consoleBookPrinter.printBookSelectedForUpdate(bookToUpdate);
+        consoleBookPrinter.printBookUpdateHint();
+
+        consoleBookPrinter.printBookUpdateTitlePrompt(bookToUpdate.getTitle());
+        String updatedTitleInput = consoleInputReader.readOptionalValidatedLine(
+                bookInputValidator::validateBookTitle,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        consoleBookPrinter.printBookUpdateAuthorPrompt(bookToUpdate.getAuthorName());
+        String updatedAuthorInput = consoleInputReader.readOptionalValidatedLine(
+                bookInputValidator::validateAuthorName,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        consoleBookPrinter.printBookUpdatePublicationYearPrompt(bookToUpdate.getPublicationYear());
+        String updatedPublicationYearInput = consoleInputReader.readOptionalValidatedLine(
+                bookInputValidator::validatePublicationYearText,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        String updatedTitle = updatedTitleInput.isEmpty()
+                ? bookToUpdate.getTitle()
+                : updatedTitleInput;
+
+        String updatedAuthorName = updatedAuthorInput.isEmpty()
+                ? bookToUpdate.getAuthorName()
+                : updatedAuthorInput;
+
+        Year updatedPublicationYear = updatedPublicationYearInput.isEmpty()
+                ? bookToUpdate.getPublicationYear()
+                : bookInputValidator.parsePublicationYear(updatedPublicationYearInput);
+
+        return new Book(
+                bookToUpdate.getId(),
+                updatedTitle,
+                updatedAuthorName,
+                updatedPublicationYear
+        );
+    }
+
+    // TODO [STAGE 17]:
     // Позже этот обработчик нужно будет расширить:
-    // - обновлением книги;
     // - удалением книги;
     // - (возможно) выделением отдельного подменю для операций с книгами.
 }

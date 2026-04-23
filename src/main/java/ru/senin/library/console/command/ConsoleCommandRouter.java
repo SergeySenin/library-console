@@ -90,6 +90,12 @@ public class ConsoleCommandRouter {
                 () -> executeAndContinueApplication(consoleBookHandler::searchBooksByPublicationYear)
         );
 
+        registerCommand(
+                mutableCommandRegistry,
+                "7",
+                () -> executeAndContinueApplication(consoleBookHandler::updateBook)
+        );
+
         return Collections.unmodifiableMap(mutableCommandRegistry);
     }
 
@@ -142,7 +148,7 @@ public class ConsoleCommandRouter {
         return CommandRoutingResult.CONTINUE_APPLICATION;
     }
 
-    // TODO [STAGE 15]:
+    // TODO [STAGE 18]:
     // Позже маршрутизацию команд можно расширить:
     // - вынести описание команд в отдельную конфигурацию;
     // - добавить поддержку вложенных меню;

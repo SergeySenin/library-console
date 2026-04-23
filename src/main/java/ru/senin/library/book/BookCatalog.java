@@ -108,6 +108,39 @@ public class BookCatalog {
         return foundBooks;
     }
 
+    public Optional<Book> updateBook(
+            long bookId,
+            String updatedTitle,
+            String updatedAuthorName,
+            Year updatedPublicationYear
+    ) {
+        if (bookId <= 0) {
+            throw new IllegalArgumentException("Book id must be greater than zero.");
+        }
+
+        for (int index = 0; index < books.size(); index++) {
+            Book book = books.get(index);
+
+            if (book.getId() == bookId) {
+                Book updatedBook = new Book(
+                        bookId,
+                        updatedTitle,
+                        updatedAuthorName,
+                        updatedPublicationYear
+                );
+
+                books.set(
+                        index,
+                        updatedBook
+                );
+
+                return Optional.of(updatedBook);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private void loadDemoBooks() {
         addDemoBook(
                 "Clean Code",
@@ -177,7 +210,6 @@ public class BookCatalog {
     // TODO [STAGE 11]:
     // Позже каталог нужно будет расширить возможностями:
     // - проверки уникальности;
-    // - обновления книги;
     // - удаления книги;
     // - загрузки данных не из демо-метода, а из файлового хранилища.
 }

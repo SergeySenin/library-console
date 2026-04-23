@@ -30,6 +30,7 @@ public class ConsoleApplicationPrinter {
         System.out.println("4 - Найти книгу по названию");
         System.out.println("5 - Найти книгу по автору");
         System.out.println("6 - Найти книгу по году издания");
+        System.out.println("7 - Редактировать книгу");
         printSeparatorLine();
         System.out.print("Введите номер команды и нажмите Enter: ");
 
@@ -75,7 +76,7 @@ public class ConsoleApplicationPrinter {
         );
         System.out.println(
                 "Повторите ввод и используйте одну из доступных команд главного меню: "
-                        + "\n|0| |1| |2| |3| |4| |5| |6|"
+                        + "\n|0| |1| |2| |3| |4| |5| |6| |7|"
         );
 
         // TODO [STAGE 13]:
