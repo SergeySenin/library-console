@@ -12,19 +12,20 @@ public class MainMenuCommandValidator {
             "4",
             "5",
             "6",
-            "7"
+            "7",
+            "8"
     );
 
     public ValidationResult validateCommand(String userCommand) {
         if (userCommand == null || userCommand.isBlank()) {
             return ValidationResult.invalid(
-                    "Команда не может быть пустой. Введите одну из команд: 0, 1, 2, 3, 4, 5, 6, 7."
+                    "Команда не может быть пустой. Введите одну из команд: 0, 1, 2, 3, 4, 5, 6, 7, 8."
             );
         }
 
         if (!ALLOWED_COMMANDS.contains(userCommand)) {
             return ValidationResult.invalid(
-                    "Неизвестная команда. Доступные команды: 0, 1, 2, 3, 4, 5, 6, 7."
+                    "Неизвестная команда. Доступные команды: 0, 1, 2, 3, 4, 5, 6, 7, 8."
             );
         }
 

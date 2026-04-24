@@ -6,6 +6,7 @@ import ru.senin.library.console.input.ConsoleInputReader;
 import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.output.ConsoleBookPrinter;
 import ru.senin.library.console.validation.BookInputValidator;
+import ru.senin.library.console.validation.ConfirmationAnswerValidator;
 
 import java.time.Year;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ConsoleBookHandler {
     private final ConsoleBookPrinter consoleBookPrinter;
     private final ConsoleInputReader consoleInputReader;
     private final BookInputValidator bookInputValidator;
+    private final ConfirmationAnswerValidator confirmationAnswerValidator;
     private final ConsoleApplicationPrinter consoleApplicationPrinter;
     private final BookCatalog bookCatalog;
 
@@ -24,6 +26,7 @@ public class ConsoleBookHandler {
             ConsoleBookPrinter consoleBookPrinter,
             ConsoleInputReader consoleInputReader,
             BookInputValidator bookInputValidator,
+            ConfirmationAnswerValidator confirmationAnswerValidator,
             ConsoleApplicationPrinter consoleApplicationPrinter,
             BookCatalog bookCatalog
     ) {
@@ -38,6 +41,10 @@ public class ConsoleBookHandler {
         this.bookInputValidator = Objects.requireNonNull(
                 bookInputValidator,
                 "Book input validator must not be null."
+        );
+        this.confirmationAnswerValidator = Objects.requireNonNull(
+                confirmationAnswerValidator,
+                "Confirmation answer validator must not be null."
         );
         this.consoleApplicationPrinter = Objects.requireNonNull(
                 consoleApplicationPrinter,
@@ -88,14 +95,9 @@ public class ConsoleBookHandler {
 
     public void searchBookById() {
         consoleBookPrinter.printBookIdSearchHeader();
-        consoleBookPrinter.printBookIdPrompt();
 
-        String bookIdText = consoleInputReader.readValidatedLine(
-                bookInputValidator::validateBookIdText,
-                consoleApplicationPrinter::printValidationError
-        );
+        long bookId = readBookId();
 
-        long bookId = bookInputValidator.parseBookId(bookIdText);
         Optional<Book> foundBook = bookCatalog.findBookById(bookId);
 
         if (foundBook.isPresent()) {
@@ -164,7 +166,7 @@ public class ConsoleBookHandler {
     public void updateBook() {
         consoleBookPrinter.printBookUpdateHeader();
 
-        long bookId = readBookIdForUpdate();
+        long bookId = readBookId();
         Optional<Book> foundBook = bookCatalog.findBookById(bookId);
 
         if (foundBook.isEmpty()) {
@@ -190,7 +192,44 @@ public class ConsoleBookHandler {
         consoleBookPrinter.printBookNotFoundById(bookId);
     }
 
-    private long readBookIdForUpdate() {
+    public void removeBook() {
+        consoleBookPrinter.printBookRemovalHeader();
+
+        long bookId = readBookId();
+        Optional<Book> foundBook = bookCatalog.findBookById(bookId);
+
+        if (foundBook.isEmpty()) {
+            consoleBookPrinter.printBookNotFoundById(bookId);
+            return;
+        }
+
+        Book bookToRemove = foundBook.get();
+        consoleBookPrinter.printBookSelectedForRemoval(bookToRemove);
+        consoleBookPrinter.printBookRemovalConfirmationPrompt();
+
+        String confirmationAnswer = consoleInputReader.readValidatedLine(
+                confirmationAnswerValidator::validateConfirmationAnswer,
+                consoleApplicationPrinter::printValidationError
+        );
+
+        boolean isRemovalConfirmed = confirmationAnswerValidator.parseConfirmationAnswer(confirmationAnswer);
+
+        if (!isRemovalConfirmed) {
+            consoleBookPrinter.printBookRemovalCanceledMessage();
+            return;
+        }
+
+        Optional<Book> removedBook = bookCatalog.removeBook(bookId);
+
+        if (removedBook.isPresent()) {
+            consoleBookPrinter.printBookRemovedMessage(removedBook.get());
+            return;
+        }
+
+        consoleBookPrinter.printBookNotFoundById(bookId);
+    }
+
+    private long readBookId() {
         consoleBookPrinter.printBookIdPrompt();
 
         String bookIdText = consoleInputReader.readValidatedLine(
@@ -243,8 +282,8 @@ public class ConsoleBookHandler {
         );
     }
 
-    // TODO [STAGE 17]:
-    // Позже этот обработчик нужно будет расширить:
-    // - удалением книги;
-    // - (возможно) выделением отдельного подменю для операций с книгами.
+    // TODO [STAGE 12]:
+    // Расширить обработчик:
+    // - выделением отдельного подменю для операций с книгами    (временно не планируется);
+    // - разделением CRUD-сценариев по отдельным handler-классам (временно не планируется).
 }

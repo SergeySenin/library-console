@@ -8,6 +8,7 @@ import ru.senin.library.console.input.ConsoleInputReader;
 import ru.senin.library.console.output.ConsoleApplicationPrinter;
 import ru.senin.library.console.output.ConsoleBookPrinter;
 import ru.senin.library.console.validation.BookInputValidator;
+import ru.senin.library.console.validation.ConfirmationAnswerValidator;
 import ru.senin.library.console.validation.MainMenuCommandValidator;
 
 public class LibraryApplication {
@@ -26,11 +27,13 @@ public class LibraryApplication {
 
         MainMenuCommandValidator mainMenuCommandValidator = new MainMenuCommandValidator();
         BookInputValidator bookInputValidator = new BookInputValidator();
+        ConfirmationAnswerValidator confirmationAnswerValidator = new ConfirmationAnswerValidator();
 
         ConsoleBookHandler consoleBookHandler = new ConsoleBookHandler(
                 consoleBookPrinter,
                 consoleInputReader,
                 bookInputValidator,
+                confirmationAnswerValidator,
                 consoleApplicationPrinter,
                 bookCatalog
         );
@@ -48,6 +51,6 @@ public class LibraryApplication {
         );
     }
 
-    // TODO [STAGE 1]:
-    // Позже создание объектов приложения нужно будет перенести в отдельный bootstrap / configuration класс.
+    // TODO [STAGE 16]:
+    // Перенести создание объектов приложения в отдельный bootstrap / configuration класс (временно не планируется).
 }

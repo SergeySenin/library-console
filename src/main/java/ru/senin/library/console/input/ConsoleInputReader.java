@@ -74,11 +74,4 @@ public class ConsoleInputReader {
             validationErrorPrinter.accept(validationResult.getErrorMessage());
         }
     }
-
-    // TODO [STAGE 4]:
-    // Позже этот класс можно расширить:
-    // - чтением yes/no ответов;
-    // - чтением подтверждений действий;
-    // - чтением чисел в диапазоне;
-    // - чтением дат.
 }

@@ -141,6 +141,23 @@ public class BookCatalog {
         return Optional.empty();
     }
 
+    public Optional<Book> removeBook(long bookId) {
+        if (bookId <= 0) {
+            throw new IllegalArgumentException("Book id must be greater than zero.");
+        }
+
+        for (int index = 0; index < books.size(); index++) {
+            Book book = books.get(index);
+
+            if (book.getId() == bookId) {
+                Book removedBook = books.remove(index);
+                return Optional.of(removedBook);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private void loadDemoBooks() {
         addDemoBook(
                 "Clean Code",
@@ -172,9 +189,9 @@ public class BookCatalog {
                 Year.of(2018)
         );
 
-        // TODO [STAGE 10]:
-        // Демо-данные нужны только для текущего этапа разработки.
-        // Позже книги должны загружаться из постоянного хранилища.
+        // TODO [STAGE 2]:
+        // Демо-данные для текущего этапа разработки         (потенциально используются).
+        // Книги должны загружаться из постоянного хранилища (временно не планируется).
     }
 
     private void addDemoBook(
@@ -207,9 +224,8 @@ public class BookCatalog {
         return searchQuery;
     }
 
-    // TODO [STAGE 11]:
-    // Позже каталог нужно будет расширить возможностями:
-    // - проверки уникальности;
-    // - удаления книги;
-    // - загрузки данных не из демо-метода, а из файлового хранилища.
+    // TODO [STAGE 3]:
+    // Расширить каталог возможностями:
+    // - проверки уникальности                                       (потенциально планируется);
+    // - загрузки данных не из демо-метода, а из файлового хранилища (временно не планируется).
 }
