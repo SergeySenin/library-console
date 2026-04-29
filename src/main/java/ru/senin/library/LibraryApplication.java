@@ -11,6 +11,15 @@ import ru.senin.library.console.validation.BookInputValidator;
 import ru.senin.library.console.validation.ConfirmationAnswerValidator;
 import ru.senin.library.console.validation.MainMenuCommandValidator;
 
+/**
+ * Точка входа и текущий composition root консольного приложения.
+ *
+ * <p>Собирает граф зависимостей приложения вручную, создаёт {@link ConsoleApplicationRunner} и передаёт ему управление.
+ * В одном месте компонуются доменные, validation-, input-, output-, handler- и command-компоненты.
+ *
+ * <p>Класс не содержит предметной логики, маршрутизации команд, чтения ввода и прямого консольного UI.
+ * Его ответственность ограничена сборкой приложения и запуском верхнеуровневого runner-а.
+ */
 public class LibraryApplication {
 
     public static void main(String[] args) {

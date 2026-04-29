@@ -2,6 +2,16 @@ package ru.senin.library.console.output;
 
 import java.util.Objects;
 
+/**
+ * Общий printer верхнего уровня консольного приложения.
+ *
+ * <p>Отвечает за стартовый экран, главное меню, сообщение о завершении приложения,
+ * общий вывод ошибок пользовательской валидации и fallback-сообщение о неизвестной команде.
+ *
+ * <p>Класс не печатает предметные данные книг и не обслуживает CRUD-сценарии книжного потока.
+ * Эти обязанности отделены в {@link ru.senin.library.console.output.ConsoleBookPrinter}, чтобы
+ * общий UI приложения не смешивался с предметным UI.
+ */
 public class ConsoleApplicationPrinter {
 
     public void printApplicationHeader() {

@@ -2,6 +2,16 @@ package ru.senin.library.console.validation;
 
 import java.util.Set;
 
+/**
+ * Валидатор команд главного меню консольного приложения.
+ *
+ * <p>Проверяет, что пользователь ввёл одну из допустимых строковых команд верхнего уровня, и
+ * возвращает {@link ValidationResult} вместо использования исключений как штатного механизма ветвления.
+ *
+ * <p>Класс не маршрутизирует команды и не знает, какие действия за ними стоят.
+ * Его задача ограничена UX-проверкой ввода перед передачей команды в
+ * {@link ru.senin.library.console.command.ConsoleCommandRouter}.
+ */
 public class MainMenuCommandValidator {
 
     private static final Set<String> ALLOWED_COMMANDS = Set.of(

@@ -13,6 +13,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Сценарный координатор пользовательских действий, связанных с книгами.
+ *
+ * <p>Собирает законченные пользовательские flow из соседних компонентов:
+ * читает ввод через
+ * {@link ru.senin.library.console.input.ConsoleInputReader}, валидирует его через
+ * {@link BookInputValidator} и {@link ConfirmationAnswerValidator}, вызывает
+ * доменные операции {@link BookCatalog} и делегирует вывод
+ * {@link ru.senin.library.console.output.ConsoleBookPrinter}.
+ *
+ * <p>Класс не хранит доменное состояние, не меняет внутренние коллекции каталога напрямую,
+ * не содержит прямого консольного вывода и не реализует низкоуровневую валидацию.
+ * Его ответственность ограничена координацией книжных CRUD- и search-сценариев.
+ */
 public class ConsoleBookHandler {
 
     private final ConsoleBookPrinter consoleBookPrinter;

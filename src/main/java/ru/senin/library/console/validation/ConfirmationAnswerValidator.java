@@ -3,6 +3,16 @@ package ru.senin.library.console.validation;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * Валидатор подтверждающего ответа пользователя для сценария удаления книги.
+ *
+ * <p>Проверяет, что введённое значение соответствует допустимому ответу подтверждения, и
+ * предоставляет отдельный шаг преобразования такого ответа в логический результат пользовательского выбора.
+ *
+ * <p>Класс намеренно изолирован от {@link BookInputValidator}, потому что
+ * подтверждение удаления является самостоятельным UI-сценарием с отдельной семантикой.
+ * Он не знает о каталоге, printer-ах и предметной модели книги.
+ */
 public class ConfirmationAnswerValidator {
 
     public ValidationResult validateConfirmationAnswer(String userAnswer) {

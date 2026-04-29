@@ -3,6 +3,17 @@ package ru.senin.library.console.validation;
 import java.time.Year;
 import java.util.Objects;
 
+/**
+ * Валидатор пользовательского ввода для книжных сценариев консольного приложения.
+ *
+ * <p>Проверяет корректность текстовых значений, связанных с книгой:
+ * идентификатора, названия, имени автора, года издания и поисковых запросов.
+ * {@link ru.senin.library.book.BookCatalog BookCatalog} и {@link ru.senin.library.book.Book Book}.
+ *
+ * <p>Класс разделяет проверку и преобразование: методы {@code validate...} подтверждают допустимость ввода, а
+ * методы {@code parse...} переводят уже проверенную строку в доменный тип.
+ * Он не хранит книги, не выполняет поиск и не знает ничего о консольном выводе.
+ */
 public class BookInputValidator {
 
     private static final int MAX_TITLE_LENGTH = 128;

@@ -8,6 +8,17 @@ import ru.senin.library.console.validation.MainMenuCommandValidator;
 
 import java.util.Objects;
 
+/**
+ * Тонкий координатор запуска и жизненного цикла консольного приложения.
+ *
+ * <p>Печатает верхний каркас приложения, читает команду пользователя,
+ * валидирует её и передаёт в {@link ConsoleCommandRouter}, а затем управляет
+ * циклом продолжения или завершения работы на основе {@link CommandRoutingResult}.
+ *
+ * <p>Класс не знает предметных деталей книжных сценариев, не содержит маршрутизацию в виде {@code switch} и не
+ * формулирует пользовательские сообщения самостоятельно.
+ * Все специализированные обязанности делегированы соседним типам.
+ */
 public class ConsoleApplicationRunner {
 
     private final ConsoleApplicationPrinter consoleApplicationPrinter;
